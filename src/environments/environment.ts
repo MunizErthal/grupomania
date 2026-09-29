@@ -2,19 +2,21 @@ import type { FirebaseOptions } from '../app/core/backend/firebase-options';
 
 /**
  * Produção.
- * 1. Crie um projeto no Firebase (Authentication e-mail/senha, Firestore, Storage).
- * 2. Cole aqui a configuração do app web (Configurações do projeto > Seus apps).
- * Enquanto `apiKey` começar com "COLE_", o site roda em modo local.
+ * A configuração do Firebase é pública por natureza (vai para o navegador);
+ * quem protege os dados são as regras em firestore.rules e storage.rules.
  */
 export const environment = {
   production: true,
+  /** Endereço público do site: usado no link canônico e nos dados estruturados. */
+  siteUrl: 'https://www.grupomaniadagua.com.br',
   firebase: {
-    apiKey: 'COLE_SUA_API_KEY',
-    authDomain: 'seu-projeto.firebaseapp.com',
-    projectId: 'seu-projeto',
-    storageBucket: 'seu-projeto.firebasestorage.app',
-    appId: 'COLE_SEU_APP_ID',
+    apiKey: 'AIzaSyBvs2dIQhB8SXEaIGERrnJ3GGP-PkmL4mI',
+    authDomain: 'grupomania.firebaseapp.com',
+    projectId: 'grupomania',
+    storageBucket: 'grupomania.firebasestorage.app',
+    messagingSenderId: '625457865447',
+    appId: '1:625457865447:web:ae15c15285600440283842',
   } as FirebaseOptions,
-  /** Login do modo local (só vale enquanto o Firebase não estiver configurado). */
-  localAdmin: { email: 'admin@grupomania.local', password: 'mania2003' } as { email: string; password: string } | null,
+  /** Login do modo local. Com o Firebase configurado, não é usado. */
+  localAdmin: null as { email: string; password: string } | null,
 };

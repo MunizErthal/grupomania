@@ -1,11 +1,11 @@
 rules_version = '2';
 // Conteúdo do site: qualquer um lê; só o(s) administrador(es) escrevem.
-// Troque o e-mail abaixo pelo e-mail do usuário criado no Firebase Authentication.
+// Administradores: usuários criados no Firebase Authentication.
 service cloud.firestore {
   match /databases/{database}/documents {
     function isAdmin() {
       return request.auth != null
-        && request.auth.token.email in ['SEU_EMAIL_DE_ADMIN@exemplo.com'];
+        && request.auth.token.email in ['ismael@mania.com', 'marcia@mania.com'];
     }
     match /site/content {
       allow read: if true;

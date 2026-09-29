@@ -9,7 +9,6 @@ Site em Angular 20 (componentes standalone, signals, zoneless) com painel escond
 
 Precisa do Node 20.19+ ou 22.12+.
 
-
 ```bash
 npm install
 npm start          # abre em http://localhost:4200
@@ -31,6 +30,13 @@ Enquanto o Firebase não estiver configurado, o site roda em **modo local**:
 8. Authentication → Configurações → **Domínios autorizados** → adicione o domínio do site (ex.: `grupomaniadagua.com.br` e o `*.pages.dev`).
 
 Como funciona: visitantes leem o conteúdo com uma única chamada à API do Firestore (sem baixar o SDK do Firebase). O SDK só é carregado dentro do painel.
+
+## Busca no Google (SEO)
+
+- Título, descrição, link canônico e imagem de compartilhamento: `src/index.html`.
+- `public/robots.txt` e `public/sitemap.xml` apontam para `https://www.grupomaniadagua.com.br`. Se o domínio for outro, troque nesses dois arquivos, em `src/index.html` e em `siteUrl` dentro de `src/environments/*.ts`.
+- Dados estruturados (schema.org): gerados sozinhos a partir do conteúdo do painel, em `src/app/core/seo/`. Depósitos, endereços, telefones e horários editados no painel vão direto para o Google.
+- Depois de publicar, cadastre o site no Google Search Console e envie o `sitemap.xml`.
 
 ## Publicar no Cloudflare Pages
 

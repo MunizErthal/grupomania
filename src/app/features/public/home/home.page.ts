@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { StructuredDataService } from '../../../core/seo/structured-data.service';
 import { AboutComponent } from '../about/about.component';
 import { DepotsComponent } from '../depots/depots.component';
 import { FaqComponent } from '../faq/faq.component';
@@ -54,4 +55,7 @@ import { YardFilmComponent } from '../yard-film/yard-film.component';
     .skip:focus { top: 1rem; }
   `,
 })
-export class HomePage {}
+export class HomePage {
+  // Public page only: publishes the schema.org data for search engines.
+  private readonly structuredData = inject(StructuredDataService);
+}
