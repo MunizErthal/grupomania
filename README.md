@@ -9,6 +9,7 @@ Site em Angular 20 (componentes standalone, signals, zoneless) com painel escond
 
 Precisa do Node 20.19+ ou 22.12+.
 
+
 ```bash
 npm install
 npm start          # abre em http://localhost:4200
