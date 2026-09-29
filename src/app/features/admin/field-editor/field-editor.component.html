@@ -1,0 +1,86 @@
+@let f = field();
+@switch (f.kind) {
+  @case ('textarea') {
+    <label class="field" [for]="id()">
+      <span class="field__label">{{ f.label }}</span>
+      <textarea [id]="id()" rows="3" [value]="text()" (input)="onInput($event)"></textarea>
+      @if (f.hint) { <span class="hint">{{ f.hint }}</span> }
+    </label>
+  }
+  @case ('toggle') {
+    <label class="toggle">
+      <input type="checkbox" [checked]="!!value()" (change)="set($any($event.target).checked)" />
+      <span class="toggle__box" aria-hidden="true"></span>
+      <span>
+        <span class="field__label">{{ f.label }}</span>
+        @if (f.hint) { <span class="hint">{{ f.hint }}</span> }
+      </span>
+    </label>
+  }
+  @case ('image') {
+    <gm-media-field [label]="f.label" [value]="text()" kind="image" [folder]="f.folder" [hint]="f.hint" [fieldId]="id()" (changed)="set($event)" />
+  }
+  @case ('video') {
+    <gm-media-field [label]="f.label" [value]="text()" kind="video" [folder]="f.folder" [hint]="f.hint" [fieldId]="id()" (changed)="set($event)" />
+  }
+  @case ('hours') {
+    <gm-hours-field [label]="f.label" [value]="asHours()" [fieldId]="id()" (changed)="set($event)" />
+  }
+  @case ('stringList') {
+    <fieldset class="list">
+      <legend class="field__label">{{ f.label }}</legend>
+      @for (item of list(); track $index; let i = $index) {
+        <div class="list__row">
+          <input type="text" [value]="item" (input)="setItem(i, $event)" [attr.aria-label]="f.itemLabel + ' ' + (i + 1)" />
+          <div class="list__tools">
+            <button type="button" class="icon-btn" (click)="move(i, -1)" [disabled]="i === 0" aria-label="Subir"><gm-icon name="up" [size]="18" /></button>
+            <button type="button" class="icon-btn" (click)="move(i, 1)" [disabled]="i === list().length - 1" aria-label="Descer"><gm-icon name="down" [size]="18" /></button>
+            <button type="button" class="icon-btn icon-btn--danger" (click)="remove(i)" aria-label="Remover"><gm-icon name="trash" [size]="18" /></button>
+          </div>
+        </div>
+      }
+      <button type="button" class="btn btn--ghost" (click)="add()"><gm-icon name="plus" [size]="18" /> Adicionar {{ f.itemLabel }}</button>
+    </fieldset>
+  }
+  @case ('objectList') {
+    <div class="olist">
+      @for (item of list(); track $index; let i = $index) {
+        <section class="olist__item" [class.olist__item--open]="expanded() === i">
+          <header class="olist__head">
+            <button type="button" class="olist__toggle" (click)="toggleItem(i)" [attr.aria-expanded]="expanded() === i">
+              <gm-icon [name]="expanded() === i ? 'down' : 'arrow'" [size]="18" />
+              {{ itemTitle(item, i) }}
+            </button>
+            <div class="list__tools">
+              <button type="button" class="icon-btn" (click)="move(i, -1)" [disabled]="i === 0" aria-label="Subir"><gm-icon name="up" [size]="18" /></button>
+              <button type="button" class="icon-btn" (click)="move(i, 1)" [disabled]="i === list().length - 1" aria-label="Descer"><gm-icon name="down" [size]="18" /></button>
+              <button type="button" class="icon-btn icon-btn--danger" (click)="remove(i)" aria-label="Remover"><gm-icon name="trash" [size]="18" /></button>
+            </div>
+          </header>
+          @if (expanded() === i) {
+            <div class="olist__body">
+              @for (sub of asObjectList().fields; track sub.key) {
+                <gm-field-editor [field]="sub" [base]="itemPath(i)" />
+              }
+            </div>
+          }
+        </section>
+      } @empty {
+        <p class="hint">Nenhum item ainda.</p>
+      }
+      <button type="button" class="btn btn--ghost" (click)="add()"><gm-icon name="plus" [size]="18" /> Adicionar {{ asObjectList().itemLabel }}</button>
+    </div>
+  }
+  @default {
+    <label class="field" [for]="id()">
+      <span class="field__label">{{ f.label }}</span>
+      <input
+        [id]="id()"
+        [type]="f.kind === 'date' ? 'date' : f.kind === 'url' ? 'url' : f.kind === 'phone' ? 'tel' : 'text'"
+        [value]="text()"
+        (input)="onInput($event)"
+      />
+      @if (f.hint) { <span class="hint">{{ f.hint }}</span> }
+    </label>
+  }
+}

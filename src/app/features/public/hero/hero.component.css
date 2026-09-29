@@ -1,0 +1,128 @@
+:host {
+  display: block;
+}
+
+.hero {
+  padding-top: clamp(2rem, 1rem + 4vw, 4.5rem);
+  background: var(--paper);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: start;
+}
+
+.hero__copy {
+  display: grid;
+  gap: var(--space-6);
+  padding-top: var(--space-4);
+}
+
+h1 {
+  font-size: var(--step-5);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  max-width: 11ch;
+}
+
+.hero__lead {
+  max-width: 36ch;
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.hero__live {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero__live li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem 0.45rem 0.7rem;
+  border-radius: 999px;
+  background: var(--white);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-weight: 650;
+  font-size: 0.95rem;
+  font-stretch: var(--w-semi);
+}
+
+.hero__live li gm-icon {
+  color: #1c7a44;
+}
+
+.hero__live li.off {
+  color: var(--ink-soft);
+  font-weight: 550;
+}
+
+.hero__live li.off gm-icon {
+  color: var(--ink-mute);
+}
+
+.hero__alt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.tag-link--quiet {
+  border-color: transparent;
+  padding-inline: 0.4rem;
+}
+
+.tag-link--quiet:hover {
+  background: transparent;
+  color: var(--accent);
+  border-color: transparent;
+}
+
+.hero__marks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-5);
+  margin-top: clamp(2.5rem, 1rem + 4vw, 4.5rem);
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--line-strong);
+  color: var(--ink-mute);
+}
+
+@media (max-width: 1024px) {
+  .hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .hero__copy {
+    display: contents;
+  }
+
+  h1 { order: 1; max-width: 12ch; }
+  .hero__lead { order: 2; }
+  .hero__ticket { order: 3; }
+  .hero__live { order: 4; }
+  .hero__alt { order: 5; }
+}
+
+@media (max-width: 560px) {
+  .hero__marks span:nth-child(n + 3) {
+    display: none;
+  }
+
+  .hero__alt .tag-link:not(.tag-link--quiet) {
+    width: 100%;
+    justify-content: center;
+  }
+}

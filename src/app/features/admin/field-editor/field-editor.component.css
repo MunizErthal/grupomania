@@ -1,0 +1,31 @@
+:host { display: block; }
+.field { display: grid; gap: 0.35rem; }
+.field__label { font-weight: 700; }
+.toggle { display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; align-items: start; cursor: pointer; }
+.toggle input { position: absolute; opacity: 0; }
+.toggle__box {
+  width: 2.6rem; height: 1.5rem; border-radius: 1rem; border: 2px solid var(--ink);
+  background: #fff; position: relative; transition: background-color 140ms var(--ease-out);
+}
+.toggle__box::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 1rem; height: 1rem; border-radius: 50%;
+  background: var(--ink); transition: transform 180ms var(--ease-out);
+}
+.toggle input:checked + .toggle__box { background: var(--accent); }
+.toggle input:checked + .toggle__box::after { transform: translateX(1.1rem); }
+.toggle input:focus-visible + .toggle__box { outline: 3px solid var(--ink); outline-offset: 2px; }
+.toggle .hint { display: block; }
+.list { margin: 0; padding: 0; border: 0; display: grid; gap: 0.5rem; }
+.list legend { margin-bottom: 0.5rem; padding: 0; }
+.list__row { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem; align-items: center; }
+.list__tools { display: flex; gap: 0.25rem; }
+.list .btn, .olist > .btn { justify-self: start; }
+.olist { display: grid; gap: 0.5rem; }
+.olist__item { border: 1.5px solid var(--galv-line); border-radius: var(--radius); background: #fff; }
+.olist__item--open { border-color: var(--ink); }
+.olist__head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; padding: 0.35rem 0.5rem 0.35rem 0.25rem; }
+.olist__toggle {
+  display: inline-flex; align-items: center; gap: 0.5rem; flex: 1; text-align: left;
+  min-height: 2.5rem; padding: 0 0.5rem; border: 0; background: none; cursor: pointer; font-weight: 750;
+}
+.olist__body { display: grid; gap: 1.25rem; padding: 1rem 1rem 1.25rem; border-top: 1px solid var(--galv-line); }

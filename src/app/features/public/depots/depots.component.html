@@ -1,0 +1,74 @@
+<section class="depots" id="depositos" aria-labelledby="depositos-title">
+  <div class="wrap">
+    <div class="depots__head">
+      <h2 id="depositos-title">Quatro depósitos, uma equipe.</h2>
+
+      <table class="hours">
+        <caption>Horário de entrega</caption>
+        <thead>
+          <tr><th scope="col"><span class="visually-hidden">Dia</span></th><th scope="col">Gás</th><th scope="col">Água</th></tr>
+        </thead>
+        <tbody>
+          @for (r of rows(); track r.day) {
+            <tr><th scope="row">{{ r.day }}</th><td>{{ r.gas }}</td><td>{{ r.agua }}</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    @if (store.hours().note) {
+      <p class="depots__note">{{ store.hours().note }}</p>
+    }
+
+    <div class="depots__list">
+      @for (d of store.depots(); track d.id) {
+        <article class="plate depot" [attr.aria-labelledby]="'dep-' + d.id">
+          <div class="depot__top">
+            <img class="depot__logo" [src]="d.logoUrl" [alt]="''" loading="lazy" />
+            <div class="depot__flags">
+              @if (d.isHeadquarters) { <span class="stamp flag">Matriz</span> }
+              @if (d.selfService24h) { <span class="stamp flag flag--dark">Estação 24h</span> }
+            </div>
+          </div>
+          <h3 [id]="'dep-' + d.id">{{ d.name }}</h3>
+          <p class="depot__tagline">{{ d.tagline }}</p>
+
+          <dl class="depot__facts">
+            <div>
+              <dt><gm-icon name="pin" [size]="18" /><span class="visually-hidden">Endereço</span></dt>
+              @if (address(d)) {
+                <dd class="depot__addr">{{ address(d) }}</dd>
+              } @else {
+                <dd class="depot__pending">Endereço em breve. Chame no WhatsApp.</dd>
+              }
+            </div>
+            @if (d.landline) {
+              <div>
+                <dt><gm-icon name="phone" [size]="18" /><span class="visually-hidden">Telefone</span></dt>
+                <dd><a [href]="tel(d.landline)">{{ d.landline }}</a></dd>
+              </div>
+            }
+            @if (d.neighborhoods) {
+              <div>
+                <dt><gm-icon name="check" [size]="18" /><span class="visually-hidden">Bairros atendidos</span></dt>
+                <dd>{{ d.neighborhoods }}</dd>
+              </div>
+            }
+          </dl>
+
+          <div class="depot__actions">
+            <a class="depot__wa" [href]="wa(d)" target="_blank" rel="noopener">
+              <gm-icon name="whatsapp" [size]="20" />
+              {{ d.whatsapp }}
+            </a>
+            @if (d.mapsUrl) {
+              <a class="depot__link" [href]="d.mapsUrl" target="_blank" rel="noopener">Mapa <gm-icon name="external" [size]="16" /></a>
+            }
+            @if (d.instagram) {
+              <a class="depot__link" [href]="'https://www.instagram.com/' + d.instagram" target="_blank" rel="noopener">&#64;{{ d.instagram }}</a>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>

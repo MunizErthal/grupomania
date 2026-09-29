@@ -1,0 +1,30 @@
+<div class="media">
+  <span class="media__label" [id]="fieldId() + '-label'">{{ label() }}</span>
+  <div class="media__row">
+    <div class="media__preview" [class.media__preview--empty]="!value()">
+      @if (!value()) {
+        <span>Sem {{ kind() === 'video' ? 'vídeo' : 'imagem' }}</span>
+      } @else if (kind() === 'video') {
+        <video [src]="value()" muted playsinline preload="metadata"></video>
+      } @else {
+        <img [src]="value()" alt="" />
+      }
+      @if (busy()) {
+        <span class="media__busy" role="status">Enviando…</span>
+      }
+    </div>
+    <div class="media__controls">
+      <label class="btn" [class.btn--disabled]="busy()">
+        <gm-icon name="upload" [size]="18" />
+        {{ value() ? 'Trocar arquivo' : 'Enviar arquivo' }}
+        <input type="file" [accept]="accept()" (change)="onFile($event)" [disabled]="busy()" class="visually-hidden" />
+      </label>
+      <label class="media__url">
+        <span>ou endereço (URL)</span>
+        <input type="text" [value]="value()" (change)="onUrl($event)" [attr.aria-describedby]="fieldId() + '-label'" />
+      </label>
+      @if (hint()) { <p class="hint">{{ hint() }}</p> }
+      @if (error()) { <p class="err" role="alert">{{ error() }}</p> }
+    </div>
+  </div>
+</div>

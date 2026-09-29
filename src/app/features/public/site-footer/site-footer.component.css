@@ -1,0 +1,133 @@
+:host {
+  display: block;
+}
+
+.foot {
+  padding-block: var(--space-9) var(--space-6);
+  background: var(--ink);
+  color: #eceeea;
+}
+
+.foot ::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+.foot :focus-visible {
+  outline-color: #ff6a33;
+}
+
+.foot__call {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-6);
+  padding-bottom: var(--space-8);
+  border-bottom: 2px solid var(--steel-line);
+}
+
+.foot__line {
+  font-stretch: var(--w-condensed);
+  font-weight: 900;
+  font-size: var(--step-5);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  max-width: 12ch;
+  color: #fff;
+}
+
+.foot__hl {
+  color: var(--accent);
+}
+
+.foot__cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 0.8fr;
+  gap: var(--space-6);
+  padding-block: var(--space-7);
+}
+
+.foot h2 {
+  font-size: var(--step-1);
+  font-stretch: var(--w-semi);
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: var(--space-4);
+}
+
+.foot ul {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foot li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.8rem;
+}
+
+.foot__name {
+  flex-basis: 100%;
+  font-weight: 750;
+}
+
+.foot a {
+  color: #eceeea;
+  text-decoration-color: var(--steel-line);
+}
+
+.foot a:hover {
+  color: #ff8a5c;
+  text-decoration-color: currentColor;
+}
+
+.foot__pay {
+  font-weight: 650;
+}
+
+.foot__muted {
+  color: #9aa2a2;
+  font-size: var(--step--1);
+  margin-top: var(--space-2);
+}
+
+.foot__sgb img {
+  width: 140px;
+  height: auto;
+}
+
+.foot__base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--steel-line);
+  color: #9aa2a2;
+  font-size: var(--step--1);
+}
+
+.foot__base img {
+  width: 84px;
+  height: auto;
+  filter: grayscale(1) brightness(1.6);
+  opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+  .foot__cols {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .foot__cols {
+    grid-template-columns: 1fr;
+  }
+  .foot {
+    padding-bottom: 6rem;
+  }
+}

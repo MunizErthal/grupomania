@@ -1,0 +1,16 @@
+rules_version = '2';
+// Imagens e vídeos enviados pelo painel: leitura pública, envio só do admin.
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['SEU_EMAIL_DE_ADMIN@exemplo.com'];
+    }
+    match /site-media/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin()
+        && request.resource.size < 50 * 1024 * 1024
+        && (request.resource.contentType.matches('image/.*') || request.resource.contentType.matches('video/.*'));
+    }
+  }
+}

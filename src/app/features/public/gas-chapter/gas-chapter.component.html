@@ -1,0 +1,51 @@
+@let gas = store.gas();
+<section class="gas" id="gas" aria-labelledby="gas-title">
+  <div class="wrap">
+    <div class="gas__intro">
+      <h2 id="gas-title">{{ gas.title }}</h2>
+      <div class="gas__side">
+        <p class="gas__lead">{{ gas.lead }}</p>
+        <img class="gas__brand" src="logos/supergasbras.png" alt="Supergasbras" width="180" height="67" loading="lazy" />
+      </div>
+    </div>
+
+    <table class="sizes">
+      <caption class="visually-hidden">Tamanhos de botijão</caption>
+      <thead class="visually-hidden">
+        <tr><th scope="col">Botijão</th><th scope="col">Carga</th><th scope="col">Uso</th></tr>
+      </thead>
+      <tbody>
+        @for (s of gas.sizes; track s.code) {
+          <tr class="size press-in">
+            <th scope="row" class="size__code">{{ s.code }}</th>
+            <td class="size__kg stamp">{{ s.kg }} · GLP</td>
+            <td class="size__use">{{ s.use }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="gas__bottom">
+      <figure class="photo gas__photo">
+        <img [src]="gas.imageUrl" alt="Botijões cheios empilhados na caçamba da picape" loading="lazy" />
+      </figure>
+      <div class="gas__side-col">
+        <div class="gas__services">
+          <h3>Junto com o botijão</h3>
+          <ul>
+            @for (item of gas.services; track item) {
+              <li><gm-icon name="check" [size]="20" [stroke]="2.4" />{{ item }}</li>
+            }
+          </ul>
+          <button type="button" class="seal" (click)="order.prepare('gas')">
+            <gm-icon name="whatsapp" [size]="22" />
+            Pedir gás
+          </button>
+        </div>
+        <figure class="photo gas__photo gas__photo--small">
+          <img [src]="gas.secondaryImageUrl" alt="Entregador conferindo botijões no depósito" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>

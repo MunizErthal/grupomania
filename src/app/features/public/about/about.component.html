@@ -1,0 +1,41 @@
+@let about = store.about();
+<section class="about" id="sobre" aria-labelledby="sobre-title">
+  <div class="wrap about__grid">
+    <p class="about__date" aria-hidden="true">{{ stampedDate() }}</p>
+    <div class="about__copy">
+      <h2 id="sobre-title">{{ about.title }}</h2>
+      <p class="about__body">{{ about.body }}</p>
+      @if (about.testimonial) {
+        <blockquote>
+          <p>“{{ about.testimonial }}”</p>
+          <footer class="stamp">{{ about.testimonialAuthor }}</footer>
+        </blockquote>
+      }
+    </div>
+    <div class="about__photos">
+      <figure class="photo about__photo about__photo--a">
+        <img [src]="about.imageUrl" alt="Atendente do Grupo Mania com fone, recebendo pedidos" loading="lazy" />
+      </figure>
+      <figure class="photo about__photo about__photo--b">
+        <img [src]="about.secondaryImageUrl" alt="Picape de entrega com as cores do grupo" loading="lazy" />
+      </figure>
+    </div>
+  </div>
+
+  @if (store.gallery().length) {
+    <div class="gallery">
+      <div class="wrap gallery__head">
+        <h3>No dia a dia</h3>
+        <div class="gallery__nav">
+          <button type="button" (click)="scrollStrip(-1)" aria-label="Fotos anteriores"><gm-icon name="arrow" [size]="20" class="flip" /></button>
+          <button type="button" (click)="scrollStrip(1)" aria-label="Próximas fotos"><gm-icon name="arrow" [size]="20" /></button>
+        </div>
+      </div>
+      <ul class="strip" #strip aria-label="Fotos do dia a dia">
+        @for (p of store.gallery(); track p.url) {
+          <li class="photo"><img [src]="p.url" [alt]="p.alt" loading="lazy" /></li>
+        }
+      </ul>
+    </div>
+  }
+</section>

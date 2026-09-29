@@ -1,0 +1,21 @@
+<section class="film" aria-label="Vídeo do nosso depósito">
+  <div class="film__frame">
+    <video
+      #film
+      [src]="store.hero().videoUrl"
+      [poster]="store.hero().posterUrl"
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      aria-label="Equipe carregando botijões e galões e picapes saindo para entrega"
+    ></video>
+    <p class="film__stamp stamp" aria-hidden="true">P13 · 13 kg GLP · Revenda Supergasbras</p>
+    <div class="film__overlay wrap">
+      <p class="film__line">Segurança, agilidade e confiança.</p>
+      <button type="button" class="film__toggle" (click)="toggle()">
+        {{ playing() ? 'Pausar vídeo' : 'Ver vídeo' }}
+      </button>
+    </div>
+  </div>
+</section>

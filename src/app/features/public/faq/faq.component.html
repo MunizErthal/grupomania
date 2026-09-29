@@ -1,0 +1,16 @@
+<section class="faq" id="duvidas" aria-labelledby="duvidas-title">
+  <div class="wrap faq__grid">
+    <h2 id="duvidas-title">Perguntas que a gente ouve no telefone.</h2>
+    <div class="faq__list">
+      @for (item of store.faq(); track item.question) {
+        <details name="faq">
+          <summary>
+            <span>{{ item.question }}</span>
+            <gm-icon name="plus" [size]="22" [stroke]="2.2" />
+          </summary>
+          <p>{{ item.answer }}</p>
+        </details>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,534 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-29T13:30:24+00:00",
+  "title": "Design System: Grupo Mania D'Água",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Depot Red-Orange",
+        "canonical": "oklch(56.7% 0.203 34)",
+        "tonalRamp": [
+          "oklch(15% 0.200 34)",
+          "oklch(26% 0.200 34)",
+          "oklch(37% 0.200 34)",
+          "oklch(48% 0.200 34)",
+          "oklch(60% 0.200 34)",
+          "oklch(72% 0.200 34)",
+          "oklch(84% 0.200 34)",
+          "oklch(95% 0.060 34)"
+        ]
+      },
+      "accent-press": {
+        "role": "primary",
+        "displayName": "Pressed Red-Orange",
+        "canonical": "oklch(49.7% 0.176 35)",
+        "tonalRamp": [
+          "oklch(15% 0.176 35)",
+          "oklch(26% 0.176 35)",
+          "oklch(37% 0.176 35)",
+          "oklch(48% 0.176 35)",
+          "oklch(60% 0.176 35)",
+          "oklch(72% 0.176 35)",
+          "oklch(84% 0.176 35)",
+          "oklch(95% 0.060 35)"
+        ]
+      },
+      "accent-soft": {
+        "role": "primary",
+        "displayName": "Blush",
+        "canonical": "oklch(94.9% 0.020 41)",
+        "tonalRamp": [
+          "oklch(15% 0.020 41)",
+          "oklch(26% 0.020 41)",
+          "oklch(37% 0.020 41)",
+          "oklch(48% 0.020 41)",
+          "oklch(60% 0.020 41)",
+          "oklch(72% 0.020 41)",
+          "oklch(84% 0.020 41)",
+          "oklch(95% 0.020 41)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(96.4% 0.003 106)",
+        "tonalRamp": [
+          "oklch(15% 0.003 106)",
+          "oklch(26% 0.003 106)",
+          "oklch(37% 0.003 106)",
+          "oklch(48% 0.003 106)",
+          "oklch(60% 0.003 106)",
+          "oklch(72% 0.003 106)",
+          "oklch(84% 0.003 106)",
+          "oklch(95% 0.003 106)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(26% 0.000 90)",
+          "oklch(37% 0.000 90)",
+          "oklch(48% 0.000 90)",
+          "oklch(60% 0.000 90)",
+          "oklch(72% 0.000 90)",
+          "oklch(84% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(89.3% 0.005 107)",
+        "tonalRamp": [
+          "oklch(15% 0.005 107)",
+          "oklch(26% 0.005 107)",
+          "oklch(37% 0.005 107)",
+          "oklch(48% 0.005 107)",
+          "oklch(60% 0.005 107)",
+          "oklch(72% 0.005 107)",
+          "oklch(84% 0.005 107)",
+          "oklch(95% 0.005 107)"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "oklch(79.7% 0.007 107)",
+        "tonalRamp": [
+          "oklch(15% 0.007 107)",
+          "oklch(26% 0.007 107)",
+          "oklch(37% 0.007 107)",
+          "oklch(48% 0.007 107)",
+          "oklch(60% 0.007 107)",
+          "oklch(72% 0.007 107)",
+          "oklch(84% 0.007 107)",
+          "oklch(95% 0.007 107)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(20.8% 0.005 248)",
+        "tonalRamp": [
+          "oklch(15% 0.005 248)",
+          "oklch(26% 0.005 248)",
+          "oklch(37% 0.005 248)",
+          "oklch(48% 0.005 248)",
+          "oklch(60% 0.005 248)",
+          "oklch(72% 0.005 248)",
+          "oklch(84% 0.005 248)",
+          "oklch(95% 0.005 248)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "oklch(46.1% 0.007 240)",
+        "tonalRamp": [
+          "oklch(15% 0.007 240)",
+          "oklch(26% 0.007 240)",
+          "oklch(37% 0.007 240)",
+          "oklch(48% 0.007 240)",
+          "oklch(60% 0.007 240)",
+          "oklch(72% 0.007 240)",
+          "oklch(84% 0.007 240)",
+          "oklch(95% 0.007 240)"
+        ]
+      },
+      "ink-mute": {
+        "role": "neutral",
+        "displayName": "Muted Graphite",
+        "canonical": "oklch(59.4% 0.007 240)",
+        "tonalRamp": [
+          "oklch(15% 0.007 240)",
+          "oklch(26% 0.007 240)",
+          "oklch(37% 0.007 240)",
+          "oklch(48% 0.007 240)",
+          "oklch(60% 0.007 240)",
+          "oklch(72% 0.007 240)",
+          "oklch(84% 0.007 240)",
+          "oklch(95% 0.007 240)"
+        ]
+      },
+      "steel": {
+        "role": "neutral",
+        "displayName": "Dark Steel",
+        "canonical": "oklch(24.0% 0.007 229)",
+        "tonalRamp": [
+          "oklch(15% 0.007 229)",
+          "oklch(26% 0.007 229)",
+          "oklch(37% 0.007 229)",
+          "oklch(48% 0.007 229)",
+          "oklch(60% 0.007 229)",
+          "oklch(72% 0.007 229)",
+          "oklch(84% 0.007 229)",
+          "oklch(95% 0.007 229)"
+        ]
+      },
+      "steel-2": {
+        "role": "neutral",
+        "displayName": "Steel Plate",
+        "canonical": "oklch(28.5% 0.008 224)",
+        "tonalRamp": [
+          "oklch(15% 0.008 224)",
+          "oklch(26% 0.008 224)",
+          "oklch(37% 0.008 224)",
+          "oklch(48% 0.008 224)",
+          "oklch(60% 0.008 224)",
+          "oklch(72% 0.008 224)",
+          "oklch(84% 0.008 224)",
+          "oklch(95% 0.008 224)"
+        ]
+      },
+      "steel-line": {
+        "role": "neutral",
+        "displayName": "Steel Line",
+        "canonical": "oklch(36.7% 0.010 229)",
+        "tonalRamp": [
+          "oklch(15% 0.010 229)",
+          "oklch(26% 0.010 229)",
+          "oklch(37% 0.010 229)",
+          "oklch(48% 0.010 229)",
+          "oklch(60% 0.010 229)",
+          "oklch(72% 0.010 229)",
+          "oklch(84% 0.010 229)",
+          "oklch(95% 0.010 229)"
+        ]
+      },
+      "steel-text": {
+        "role": "neutral",
+        "displayName": "Brushed Steel Text",
+        "canonical": "oklch(82.9% 0.006 211)",
+        "tonalRamp": [
+          "oklch(15% 0.006 211)",
+          "oklch(26% 0.006 211)",
+          "oklch(37% 0.006 211)",
+          "oklch(48% 0.006 211)",
+          "oklch(60% 0.006 211)",
+          "oklch(72% 0.006 211)",
+          "oklch(84% 0.006 211)",
+          "oklch(95% 0.006 211)"
+        ]
+      }
+    },
+    "aliases": [
+      {
+        "name": "--galv",
+        "resolvesTo": "paper"
+      },
+      {
+        "name": "--galv-2",
+        "resolvesTo": "#e8e8e5"
+      },
+      {
+        "name": "--galv-line",
+        "resolvesTo": "line-strong"
+      },
+      {
+        "name": "--galv-text-soft",
+        "resolvesTo": "ink-soft"
+      },
+      {
+        "name": "--ochre",
+        "resolvesTo": "accent"
+      },
+      {
+        "name": "--ochre-ink-soft",
+        "resolvesTo": "ink-soft"
+      }
+    ],
+    "aliasNote": "Legacy custom properties kept only so admin styles resolve; they are aliases, not palette colours. New work uses the neutral/accent names.",
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline and footer call line; last sentence in accent."
+      },
+      "numeral": {
+        "displayName": "Stamped Numeral",
+        "purpose": "Product codes (P13, 20 L); outlined giant variants for 24h and the founding date."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Ticket heading, depot names, safety items."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "Sub-sections, hours caption."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Section introductions, 36–46ch, graphite."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading text, tabular numerals on."
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "Order button text at 82% width."
+      },
+      "label": {
+        "displayName": "Stamp",
+        "purpose": "Uppercase tracked condensed labels: form steps, codes, table heads, ribbon, footage tag, chips."
+      }
+    },
+    "shadows": [
+      {
+        "name": "soft-card",
+        "value": "0 1px 2px rgb(22 24 26 / 0.06), 0 12px 32px -12px rgb(22 24 26 / 0.18)",
+        "purpose": "Order ticket, jug card, safety label, depot cards on hover."
+      },
+      {
+        "name": "order-glow",
+        "value": "0 10px 24px -12px rgb(211 49 0 / 0.7)",
+        "purpose": "Order button at rest."
+      },
+      {
+        "name": "order-glow-hover",
+        "value": "0 14px 28px -12px rgb(211 49 0 / 0.75)",
+        "purpose": "Order button on hover."
+      },
+      {
+        "name": "order-glow-press",
+        "value": "0 4px 10px -6px rgb(211 49 0 / 0.7)",
+        "purpose": "Order button on press."
+      },
+      {
+        "name": "hairline-ring",
+        "value": "inset 0 0 0 1px #dcdcd8",
+        "purpose": "Chips and status pills instead of a border."
+      },
+      {
+        "name": "cutout-light",
+        "value": "drop-shadow(0 22px 20px rgb(22 24 26 / 0.18))",
+        "purpose": "Product renders on light grounds (filter)."
+      },
+      {
+        "name": "cutout-steel",
+        "value": "drop-shadow(0 30px 34px rgb(0 0 0 / 0.45))",
+        "purpose": "Product renders on steel (filter)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All transitions and the rise-in."
+      },
+      {
+        "name": "duration-state",
+        "value": "140–180ms",
+        "purpose": "Button, option and pill colour/lift changes."
+      },
+      {
+        "name": "duration-underline",
+        "value": "220ms",
+        "purpose": "Nav underline draw-in, order icon tilt, FAQ icon rotation."
+      },
+      {
+        "name": "card-hover",
+        "value": "260ms",
+        "purpose": "Depot card lifting to white with soft shadow."
+      },
+      {
+        "name": "photo-zoom",
+        "value": "900ms scale(1.035)",
+        "purpose": "Frameless photo hover (hover-capable pointers only)."
+      },
+      {
+        "name": "rise-in",
+        "value": "620ms; from translateY(18px) opacity 0.55; view() timeline, entry 0–45%",
+        "purpose": "Markings entering the viewport; only without prefers-reduced-motion."
+      },
+      {
+        "name": "mobile-bar-slide",
+        "value": "260ms translateY",
+        "purpose": "Fixed mobile order bar appearing once the ticket scrolls away."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "420px"
+      },
+      {
+        "name": "phone",
+        "value": "560px"
+      },
+      {
+        "name": "mobile-bar",
+        "value": "760px"
+      },
+      {
+        "name": "single-column",
+        "value": "900px"
+      },
+      {
+        "name": "nav-collapse",
+        "value": "960px"
+      },
+      {
+        "name": "hero-stack",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Order Button",
+      "kind": "button",
+      "refersTo": "button-order",
+      "description": "Primary action: the only solid accent surface on the page.",
+      "html": "<a class=\"ds-order\" href=\"#\"><span class=\"ds-order__i\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21\"/><path d=\"M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1\"/></svg></span>Pedir pelo WhatsApp</a>",
+      "css": ".ds-order{font-family:var(--font,'Archivo','Arial Narrow',system-ui,sans-serif);display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:3.4rem;padding:0 1.6rem 0 1.3rem;border:0;border-radius:999px;background:var(--accent,#d33100);color:#fff;font-weight:750;font-stretch:82%;font-size:1.125rem;letter-spacing:.005em;text-decoration:none;box-shadow:0 10px 24px -12px rgb(211 49 0 / .7);transition:transform 180ms cubic-bezier(.16,1,.3,1),background-color 180ms cubic-bezier(.16,1,.3,1),box-shadow 180ms cubic-bezier(.16,1,.3,1)}.ds-order__i{display:grid;transition:transform 220ms cubic-bezier(.16,1,.3,1)}.ds-order:hover{background:var(--accent-press,#b02900);transform:translateY(-1px);box-shadow:0 14px 28px -12px rgb(211 49 0 / .75)}.ds-order:hover .ds-order__i{transform:rotate(-8deg) scale(1.06)}.ds-order:active{transform:translateY(1px);box-shadow:0 4px 10px -6px rgb(211 49 0 / .7)}.ds-order:focus-visible{outline:3px solid var(--ink,#16181a);outline-offset:3px}"
+    },
+    {
+      "name": "Outline Pill",
+      "kind": "button",
+      "refersTo": "button-pill-outline",
+      "description": "Secondary action: quiet outlined pill that fills with ink on hover.",
+      "html": "<div class=\"ds-g\"><a class=\"ds-pill\" href=\"#\">Ver os depósitos</a><a class=\"ds-pill ds-pill--quiet\" href=\"#\">Prefere ligar? (51) 3561-5782</a></div>",
+      "css": ".ds-g{font-family:var(--font,'Archivo','Arial Narrow',system-ui,sans-serif);display:flex;flex-wrap:wrap;gap:.75rem;padding:1.5rem;background:var(--paper,#f3f3f1);color:var(--ink,#16181a)}.ds-pill{display:inline-flex;align-items:center;gap:.5rem;min-height:3rem;padding:0 1.2rem;border:1.5px solid currentColor;border-radius:999px;font-weight:700;font-stretch:82%;color:inherit;text-decoration:none;font-variant-numeric:tabular-nums;transition:background-color 180ms cubic-bezier(.16,1,.3,1),color 180ms cubic-bezier(.16,1,.3,1),border-color 180ms cubic-bezier(.16,1,.3,1)}.ds-pill:hover{background:var(--ink,#16181a);border-color:var(--ink,#16181a);color:#fff}.ds-pill--quiet{border-color:transparent}.ds-pill--quiet:hover{background:transparent;border-color:transparent;color:var(--accent,#d33100)}.ds-pill:focus-visible{outline:3px solid var(--accent,#d33100);outline-offset:3px}"
+    },
+    {
+      "name": "Depot Dial",
+      "kind": "button",
+      "refersTo": "button-dial",
+      "description": "A depot's WhatsApp number as an ink pill; turns accent on hover because it places an order.",
+      "html": "<div class=\"ds-g2\"><a class=\"ds-dial\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21\"/><path d=\"M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1\"/></svg>(51) 99662-1660</a></div>",
+      "css": ".ds-g2{padding:1.5rem;background:#fff}.ds-dial{font-family:var(--font,'Archivo','Arial Narrow',system-ui,sans-serif);display:inline-flex;align-items:center;gap:.5rem;min-height:2.9rem;padding:0 1.1rem 0 .9rem;border-radius:999px;background:var(--ink,#16181a);color:#fff;font-weight:750;text-decoration:none;font-variant-numeric:tabular-nums;transition:background-color 180ms cubic-bezier(.16,1,.3,1)}.ds-dial:hover{background:var(--accent,#d33100)}.ds-dial:focus-visible{outline:3px solid var(--accent,#d33100);outline-offset:3px}"
+    },
+    {
+      "name": "Order Ticket Options",
+      "kind": "custom",
+      "refersTo": "order-ticket",
+      "description": "Signature order card: Gás/Água tiles (selected = ink) and depot tiles (selected = blush with accent ring).",
+      "html": "<div class=\"ds-ticket\"><span class=\"ds-stamp\">1 · O que acabou?</span><div class=\"ds-two\"><label class=\"ds-opt ds-line ds-line--on\"><input type=\"radio\" name=\"dl\" checked><span class=\"ds-line__label\">Gás</span><span class=\"ds-stamp ds-code\">P13 · P45</span></label><label class=\"ds-opt ds-line\"><input type=\"radio\" name=\"dl\"><span class=\"ds-line__label\">Água</span><span class=\"ds-stamp ds-code\">20 L</span></label></div><span class=\"ds-stamp\">2 · Qual depósito atende você?</span><div class=\"ds-two\"><label class=\"ds-opt ds-dep ds-dep--on\"><input type=\"radio\" name=\"dd\" checked><b>Mania D'Água</b><small>Bela Vista · Estância Velha</small></label><label class=\"ds-opt ds-dep\"><input type=\"radio\" name=\"dd\"><b>Gás Guarani</b><small>Guarani · Novo Hamburgo</small></label></div></div>",
+      "css": ".ds-ticket{font-family:var(--font,'Archivo','Arial Narrow',system-ui,sans-serif);display:grid;gap:.75rem;padding:2rem 1.5rem 1.5rem;background:#fff;color:var(--ink,#16181a);border-radius:22px;box-shadow:0 1px 2px rgb(22 24 26 / .06),0 12px 32px -12px rgb(22 24 26 / .18)}.ds-stamp{font-stretch:62%;font-weight:700;font-size:.875rem;letter-spacing:.08em;text-transform:uppercase;line-height:1.1;color:var(--ink-soft,#55595c)}.ds-two{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.ds-opt{position:relative;display:grid;cursor:pointer;border:1.5px solid var(--line,#dcdcd8);border-radius:14px;background:var(--paper,#f3f3f1);transition:border-color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1)}.ds-opt input{position:absolute;opacity:0;pointer-events:none}.ds-opt:hover{border-color:var(--ink,#16181a)}.ds-opt:has(input:focus-visible){outline:3px solid var(--accent,#d33100);outline-offset:2px}.ds-line{padding:.7rem .9rem;gap:.1rem}.ds-line__label{font-stretch:62%;font-weight:850;font-size:2rem;line-height:1}.ds-line--on{border-color:var(--ink,#16181a);background:var(--ink,#16181a);color:#fff}.ds-line--on .ds-code{color:#ff8a5c}.ds-dep{padding:.55rem .75rem;line-height:1.2}.ds-dep b{font-weight:800;font-stretch:82%}.ds-dep small{font-size:.875rem;color:var(--ink-soft,#55595c)}.ds-dep--on{border-color:var(--accent,#d33100);background:var(--accent-soft,#fbeae4);box-shadow:inset 0 0 0 1px var(--accent,#d33100)}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Paper field with hairline stroke; turns white with an ink stroke on focus.",
+      "html": "<label class=\"ds-in\"><span>3 · Endereço e detalhes (opcional)</span><textarea rows=\"2\" placeholder=\"Ex.: 1 botijão P13, Rua das Flores 120\"></textarea></label>",
+      "css": ".ds-in{font-family:var(--font,'Archivo','Arial Narrow',system-ui,sans-serif);display:grid;gap:.75rem;padding:1.5rem;background:#fff;color:var(--ink,#16181a)}.ds-in span{font-stretch:62%;font-weight:700;font-size:.875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft,#55595c)}.ds-in textarea{font:inherit;width:100%;min-height:3.5rem;padding:.7rem .8rem;border:1.5px solid var(--line,#dcdcd8);border-radius:14px;background:var(--paper,#f3f3f1);line-height:1.4;resize:vertical;transition:border-color 140ms cubic-bezier(.16,1,.3,1),background-color 140ms cubic-bezier(.16,1,.3,1)}.ds-in textarea::placeholder{color:#6a7070}.ds-in textarea:hover{border-color:var(--line-strong,#bdbdb8)}.ds-in textarea:focus{outline:none;border-color:var(--ink,#16181a);background:#fff}"
+    },
+    {
+      "name": "Header Bar",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Sticky translucent paper bar, accent draw-in underline links, tabular phone, accent Pedir pill.",
+      "html": "<nav class=\"ds-bar\"><strong class=\"ds-bar__logo\">Grupo Mania</strong><ul><li><a href=\"#\">Gás</a></li><li><a href=\"#\">Água</a></li><li><a href=\"#\">24 horas</a></li><li><a href=\"#\">Depósitos</a></li></ul><button class=\"ds-bar__order\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21\"/><path d=\"M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1\"/></svg>Pedir</button></nav>",
+      "css": ".ds-bar{font-family:var(--font,'Archivo','Arial Narrow',system-ui,sans-serif);display:flex;align-items:center;gap:1.5rem;min-height:4.25rem;padding:0 1.5rem;background:color-mix(in oklab,var(--paper,#f3f3f1) 86%,transparent);backdrop-filter:blur(10px);color:var(--ink,#16181a);border-bottom:1px solid var(--line,#dcdcd8)}.ds-bar__logo{font-stretch:62%;font-weight:900;font-size:1.25rem}.ds-bar ul{display:flex;gap:1.5rem;margin:0 0 0 auto;padding:0;list-style:none}.ds-bar a{color:inherit;font-weight:700;font-stretch:82%;text-decoration:none;padding-block:.4rem;background:linear-gradient(var(--accent,#d33100),var(--accent,#d33100)) 0 100%/0 2px no-repeat;transition:background-size 220ms cubic-bezier(.16,1,.3,1)}.ds-bar a:hover{background-size:100% 2px}.ds-bar a:focus-visible{outline:3px solid var(--accent,#d33100);outline-offset:3px}.ds-bar__order{font:inherit;display:inline-flex;align-items:center;gap:.45rem;height:2.75rem;padding:0 1rem 0 .8rem;border:0;border-radius:999px;background:var(--accent,#d33100);color:#fff;font-weight:750;font-stretch:82%;cursor:pointer;transition:background-color 160ms cubic-bezier(.16,1,.3,1)}.ds-bar__order:hover{background:var(--accent-press,#b02900)}"
+    },
+    {
+      "name": "Chips",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "White pills with an inset hairline ring; the solid accent chip is reserved for Matriz/24h and the station promo.",
+      "html": "<div class=\"ds-chips\"><span class=\"ds-chip ds-chip--live\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" aria-hidden=\"true\"><path d=\"M5 12l5 5L20 7\"/></svg>Entrega de gás aberta até 21h30</span><span class=\"ds-chip\">Água da Pedra</span><span class=\"ds-chip ds-stamp2\">Revenda Supergasbras</span><span class=\"ds-chip ds-chip--accent ds-stamp2\">Matriz</span></div>",
+      "css": ".ds-chips{font-family:var(--font,'Archivo','Arial Narrow',system-ui,sans-serif);display:flex;flex-wrap:wrap;gap:.6rem;padding:1.5rem;background:var(--paper,#f3f3f1);color:var(--ink,#16181a)}.ds-chip{display:inline-flex;align-items:center;gap:.45rem;padding:.4rem .9rem;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px var(--line,#dcdcd8);font-weight:700;font-stretch:82%}.ds-chip--live svg{color:#1c7a44}.ds-stamp2{font-stretch:62%;font-size:.875rem;letter-spacing:.08em;text-transform:uppercase;line-height:1.1;padding:.35rem .7rem}.ds-chip--accent{background:var(--accent,#d33100);color:#fff;box-shadow:none}"
+    },
+    {
+      "name": "Depot Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Borderless 22px card: rests on paper, turns white with a soft shadow on hover; accent fact labels.",
+      "html": "<div class=\"ds-wrapc\"><article class=\"ds-card\"><h3>Gás Guarani</h3><p class=\"ds-card__tag\">Revenda Supergasbras</p><dl><div><dt>End.</dt><dd>R. São Carlos, 71 – Guarani</dd></div><div><dt>Fixo</dt><dd>(51) 3527-4949</dd></div></dl></article></div>",
+      "css": ".ds-wrapc{padding:1.5rem;background:#fff}.ds-card{font-family:var(--font,'Archivo','Arial Narrow',system-ui,sans-serif);display:grid;gap:.75rem;padding:2rem;border-radius:22px;background:var(--paper,#f3f3f1);color:var(--ink,#16181a);font-variant-numeric:tabular-nums;transition:box-shadow 260ms cubic-bezier(.16,1,.3,1),background-color 260ms cubic-bezier(.16,1,.3,1)}.ds-card:hover{background:#fff;box-shadow:0 1px 2px rgb(22 24 26 / .06),0 12px 32px -12px rgb(22 24 26 / .18),inset 0 0 0 1px var(--line,#dcdcd8)}.ds-card h3{margin:0;font-stretch:62%;font-weight:850;font-size:clamp(2rem,1.4rem + 2.6vw,3.25rem);line-height:.95;letter-spacing:-.01em}.ds-card__tag{margin:0;font-weight:600;color:var(--ink-soft,#55595c)}.ds-card dl{display:grid;gap:.75rem;margin:.75rem 0 0;padding-top:1rem;border-top:1px solid var(--line,#dcdcd8)}.ds-card dl div{display:grid;grid-template-columns:3rem 1fr;gap:.75rem}.ds-card dt{color:var(--accent,#d33100);font-weight:700}.ds-card dd{margin:0;font-weight:600}"
+    },
+    {
+      "name": "Frameless Photo",
+      "kind": "custom",
+      "refersTo": "photo",
+      "description": "Photos with no frame: 22px clip over a hairline placeholder, slow 3.5% zoom on hover.",
+      "html": "<figure class=\"ds-photo\"><img alt=\"\" src=\"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22%3E%3Crect width=%224%22 height=%223%22 fill=%22%237b7f82%22/%3E%3C/svg%3E\"></figure>",
+      "css": ".ds-photo{margin:0;width:280px;aspect-ratio:4/3;overflow:hidden;border-radius:22px;background:var(--line,#dcdcd8)}.ds-photo img{width:100%;height:100%;object-fit:cover;transition:transform 900ms cubic-bezier(.16,1,.3,1)}.ds-photo:hover img{transform:scale(1.035)}"
+    },
+    {
+      "name": "Admin Buttons",
+      "kind": "button",
+      "refersTo": "admin-button-primary",
+      "description": "Operate surface: 10px-radius buttons; primary ink, ghost dashed.",
+      "html": "<div class=\"ds-adm\"><button class=\"ds-abtn ds-abtn--primary\">Publicar</button><button class=\"ds-abtn\">Desfazer</button><button class=\"ds-abtn ds-abtn--ghost\">Adicionar item</button></div>",
+      "css": ".ds-adm{font-family:var(--font,'Archivo','Arial Narrow',system-ui,sans-serif);display:flex;gap:.5rem;flex-wrap:wrap;padding:1.5rem;background:var(--paper,#f3f3f1);color:var(--ink,#16181a)}.ds-abtn{font:inherit;display:inline-flex;align-items:center;min-height:2.6rem;padding:0 1rem;border:1.5px solid var(--ink,#16181a);border-radius:10px;background:#fff;color:inherit;font-weight:700;cursor:pointer;transition:background-color 140ms cubic-bezier(.16,1,.3,1)}.ds-abtn:hover{background:#e8e8e5}.ds-abtn--primary{background:var(--ink,#16181a);color:#fff}.ds-abtn--primary:hover{background:#000}.ds-abtn--ghost{border-style:dashed;background:transparent}.ds-abtn:focus-visible{outline:3px solid var(--accent,#d33100);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Stamped Markings, Quiet Ground",
+    "overview": "The system keeps the voice of what the depots deliver (the code stamped on a P13 collar, the 20 L jug label, the founding date) but sets it on calm, neutral ground. Type carries the identity. Surfaces are soft and modern. Sections alternate between warm paper (#f3f3f1) and white, and change in value only, never in hue. Three moments go dark: the yard film band, the 24h station, and the footer. One owner-pinned red-orange accent marks the order, the closing sentence of a headline, and small markings. It never covers a whole field.\n\nType does the heavy lifting. A single variable grotesk (Archivo) goes from ultra-condensed black for headlines and stamped codes (P13, 20 L, 24h, 03.03.2003) to normal width for reading. Tracked micro-caps stamps label real things: form steps, product codes, table heads, the footage tag. Around that type everything is gentle: white cards with a 22px radius and a soft shadow, pill buttons and chips, and photos that bleed to rounded corners with no frame.\n\nThe page reads young and plain for neighbours on a phone: 17px body, strong contrast, primary tap targets 3–3.4rem tall. Motion is short and grounded. Markings rise 18px into place as they enter the viewport, photos zoom 3.5% on hover, and the order button's icon tilts. Nothing loops or drifts.",
+    "keyCharacteristics": [
+      "Neutral grounds only: paper and white alternate by section, with dark steel/ink for film, the 24h station and the footer.",
+      "One accent (#d33100), reserved for ordering, headline emphasis and small markings.",
+      "One family, Archivo, with the width axis as the hierarchy: 62% condensed for markings, 82% semi for actions, 100% for reading.",
+      "Soft white cards (22px radius, soft shadow), with no frames, rivets or hard borders.",
+      "Pill-shaped buttons and chips.",
+      "Frameless photos with a 22px radius.",
+      "Tabular numerals everywhere: hours, phones, codes."
+    ],
+    "rules": [
+      {
+        "name": "The One Accent Rule",
+        "body": "#d33100 is the only hue in the system. It marks the order, the emphasised last sentence of a headline, and small markings (icons, fact labels, 5px bars, one chip). It is never a section background, a card fill, a gradient, or a second brand colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Value-Only Rule",
+        "body": "Sections change ground by value (paper, white, ink/steel), never by hue. There are no ochre, gold or blue fields.",
+        "section": "colors"
+      },
+      {
+        "name": "The Solid Order Rule",
+        "body": "The only large solid accent surfaces are the order buttons. Every other solid pill is ink or white, so the order stays the loudest thing on screen.",
+        "section": "colors"
+      },
+      {
+        "name": "The Width Axis Rule",
+        "body": "Hierarchy comes from Archivo's width and weight: condensed black for markings, 82% for actions, normal width for reading. Do not add a second typeface.",
+        "section": "typography"
+      },
+      {
+        "name": "The Stamp Is Not a Kicker Rule",
+        "body": "The uppercase stamp labels something that exists (a form step, a code, a column, the footage). It never sits above a headline as an eyebrow.",
+        "section": "typography"
+      },
+      {
+        "name": "The Closing Line Rule",
+        "body": "Headline emphasis is colour on the final sentence (for example \"A gente leva.\"), never a gradient, underline or highlight box.",
+        "section": "typography"
+      },
+      {
+        "name": "The Soft Lift Rule",
+        "body": "Cards rise by shadow, never by an outline. A 1px ring is allowed only as an inset hairline on chips and hovered cards.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** alternate sections between paper and white, and use ink/steel only for the film, the 24h station and the footer.",
+      "**Do** keep #d33100 for ordering, the closing sentence of a headline, and small markings.",
+      "**Do** set headings, codes and numerals in Archivo 850–900 at 62% width, and reading text at normal width.",
+      "**Do** show photos frameless with a 22px radius.",
+      "**Do** make every button and chip a pill, and keep primary tap targets at least 3rem tall.",
+      "**Do** keep tabular numerals on for hours, phones and product codes.",
+      "**Do** let markings rise in (18px, 620ms, `cubic-bezier(0.16, 1, 0.3, 1)`) only when reduced motion is not requested."
+    ],
+    "donts": [
+      "**Don't** use ochre, gold or blue grounds, or switch hue between sections.",
+      "**Don't** add frames, rivets or hard borders to photos or cards.",
+      "**Don't** introduce a second accent colour or use the accent as a background field.",
+      "**Don't** put a stamped eyebrow or kicker line above a headline.",
+      "**Don't** lead with a stock flame or water-drop hero or a stock product shot; use the real yard footage and depot photos.",
+      "**Don't** add a second typeface.",
+      "**Don't** stamp figures that are not true (a tare weight, a ticket serial, an invented order number)."
+    ]
+  }
+}

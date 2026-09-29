@@ -1,0 +1,58 @@
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__call">
+      <p class="foot__line">
+        @if (line().head) {
+          {{ line().head }}
+        }
+        <span class="foot__hl">{{ line().tail }}</span>
+      </p>
+      <button type="button" class="seal" (click)="order.prepare('gas')">
+        <gm-icon name="whatsapp" [size]="22" />
+        Fazer pedido
+      </button>
+    </div>
+
+    <div class="foot__cols">
+      <div>
+        <h2>Telefones</h2>
+        <ul>
+          @for (d of store.depots(); track d.id) {
+            <li>
+              <span class="foot__name">{{ d.name }}</span>
+              <a [href]="wa(d.whatsapp)" target="_blank" rel="noopener">{{ d.whatsapp }}</a>
+              @if (d.landline) { <a [href]="tel(d.landline)">{{ d.landline }}</a> }
+            </li>
+          }
+        </ul>
+      </div>
+      <div>
+        <h2>Instagram</h2>
+        <ul>
+          @for (d of store.depots(); track d.id) {
+            @if (d.instagram) {
+              <li><a [href]="'https://www.instagram.com/' + d.instagram" target="_blank" rel="noopener">&#64;{{ d.instagram }}</a></li>
+            }
+          }
+          @if (store.brand().linktree) {
+            <li><a [href]="store.brand().linktree" target="_blank" rel="noopener">Todos os links</a></li>
+          }
+        </ul>
+      </div>
+      <div>
+        <h2>Pagamento</h2>
+        <p class="foot__pay">{{ store.payments().join(' · ') }}</p>
+        <p class="foot__muted">A maquininha vai até você.</p>
+      </div>
+      <div class="foot__sgb">
+        <img src="logos/supergasbras.png" alt="Supergasbras" width="160" height="60" loading="lazy" />
+        <p class="foot__muted">Revenda autorizada</p>
+      </div>
+    </div>
+
+    <div class="foot__base">
+      <img src="logos/grupo.png" alt="" width="96" height="55" loading="lazy" />
+      <p>© {{ store.brand().foundedOn.slice(0, 4) }}–{{ year }} {{ store.brand().groupName }} · {{ store.brand().city }}</p>
+    </div>
+  </div>
+</footer>

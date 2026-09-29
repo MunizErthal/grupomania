@@ -1,0 +1,10 @@
+.hours { margin: 0; padding: 0; border: 0; display: grid; gap: 0.5rem; }
+legend { font-weight: 700; margin-bottom: 0.5rem; padding: 0; }
+.hours__row {
+  display: grid; grid-template-columns: 12rem auto auto auto; gap: 0.75rem; align-items: center;
+  padding: 0.5rem 0; border-bottom: 1px solid var(--galv-line);
+}
+.hours__day { display: inline-flex; gap: 0.5rem; align-items: center; font-weight: 600; }
+.hours__time input { width: 9rem; }
+.hours__closed { grid-column: span 3; color: var(--ink-soft); }
+@media (max-width: 560px) { .hours__row { grid-template-columns: 1fr auto auto auto; } .hours__day { grid-column: 1 / -1; } }

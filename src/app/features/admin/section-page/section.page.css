@@ -1,0 +1,5 @@
+:host { display: block; max-width: 52rem; }
+.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; padding-bottom: 1.25rem; margin-bottom: 1.75rem; border-bottom: 2px solid var(--ink); }
+h1 { font-size: 2.5rem; margin-bottom: 0.35rem; }
+.head__tools { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.fields { display: grid; gap: 1.5rem; }

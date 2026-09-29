@@ -1,0 +1,133 @@
+:host {
+  display: block;
+}
+
+.station {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-9);
+  background: var(--steel);
+  color: #f2f3f1;
+}
+
+.station ::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+.station__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.station__numeral {
+  position: absolute;
+  top: -0.12em;
+  right: -0.04em;
+  font-stretch: var(--w-condensed);
+  font-weight: 900;
+  font-size: clamp(12rem, 8rem + 20vw, 30rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--steel-line);
+  pointer-events: none;
+  user-select: none;
+}
+
+.station__numeral span {
+  font-size: 0.4em;
+}
+
+.station__copy {
+  position: relative;
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+h2 {
+  font-size: var(--step-4);
+  max-width: 12ch;
+}
+
+.station__lead {
+  font-size: var(--step-1);
+  color: var(--steel-text);
+  max-width: 40ch;
+}
+
+ul {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  display: flex;
+  gap: 0.55rem;
+  font-weight: 650;
+}
+
+li gm-icon {
+  color: var(--accent);
+}
+
+.station__promo {
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-stretch: var(--w-semi);
+}
+
+.station__where {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  color: var(--steel-text);
+}
+
+.station .tag-link {
+  color: #fff;
+}
+
+.station .tag-link:hover {
+  background: #fff;
+  border-color: #fff;
+  color: var(--ink);
+}
+
+.station :focus-visible {
+  outline-color: #ff6a33;
+}
+
+.station__render {
+  position: relative;
+  margin: 0;
+}
+
+.station__render img {
+  width: min(560px, 100%);
+  height: auto;
+  margin-inline: auto;
+  filter: drop-shadow(0 30px 34px rgb(0 0 0 / 0.45));
+}
+
+@media (max-width: 900px) {
+  .station__numeral {
+    display: none;
+  }
+  .station__grid {
+    grid-template-columns: 1fr;
+  }
+  .station__render {
+    order: -1;
+  }
+}

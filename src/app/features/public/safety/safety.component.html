@@ -1,0 +1,25 @@
+@let tips = store.safety();
+<section class="safety" id="seguranca" aria-labelledby="seguranca-title">
+  <div class="wrap">
+    <h2 id="seguranca-title">Gás em casa, com cuidado.</h2>
+    @if (tips.length) {
+      <div class="plate label press-in">
+        <div class="label__warning">
+          <h3>{{ tips[0].title }}</h3>
+          <p>{{ tips[0].body }}</p>
+        </div>
+        @if (tips.length > 1) {
+          <div class="label__rest">
+            @for (tip of tips.slice(1); track tip.title) {
+              <div class="label__item">
+                <h3>{{ tip.title }}</h3>
+                <p>{{ tip.body }}</p>
+              </div>
+            }
+          </div>
+        }
+        <p class="label__foot stamp" aria-hidden="true">GLP · Mantenha o registro fechado quando não estiver usando</p>
+      </div>
+    }
+  </div>
+</section>

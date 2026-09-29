@@ -1,0 +1,44 @@
+@let water = store.water();
+<section class="water" id="agua" aria-labelledby="agua-title">
+  <div class="wrap water__grid">
+    <div class="water__copy">
+      <h2 id="agua-title">{{ water.title }}</h2>
+      <p class="water__lead">{{ water.lead }}</p>
+
+      <div class="water__brands" aria-label="Marcas que entregamos">
+        @for (b of water.brands; track b) {
+          <span class="brand">{{ b }}</span>
+        }
+      </div>
+
+      <button type="button" class="seal" (click)="order.prepare('agua')">
+        <gm-icon name="whatsapp" [size]="22" />
+        Pedir água
+      </button>
+    </div>
+
+    <figure class="plate water__jug">
+      <p class="water__jug-code" aria-hidden="true">20<span>L</span></p>
+      <img [src]="water.cutoutUrl" alt="Galão de 20 litros no suporte com torneira" loading="lazy" />
+      <figcaption class="stamp">Água mineral natural</figcaption>
+    </figure>
+
+    <div class="water__list">
+      <h3>Também na entrega</h3>
+      <ul class="water__items">
+        @for (item of water.items; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+      <ul class="water__services">
+        @for (s of water.services; track s) {
+          <li><gm-icon name="check" [size]="20" [stroke]="2.4" />{{ s }}</li>
+        }
+      </ul>
+    </div>
+
+    <figure class="photo water__photo">
+      <img [src]="water.imageUrl" alt="Galões de 20 litros com lacre, prontos para entrega" loading="lazy" />
+    </figure>
+  </div>
+</section>

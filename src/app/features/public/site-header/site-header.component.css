@@ -1,0 +1,147 @@
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: block;
+}
+
+.bar {
+  background: color-mix(in oklab, var(--paper) 86%, transparent);
+  backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.bar__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 4.25rem;
+}
+
+.bar__logo {
+  display: block;
+  padding-block: 0.4rem;
+}
+
+.bar__logo img {
+  width: 88px;
+  height: auto;
+}
+
+.bar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin-left: auto;
+}
+
+.bar__nav ul {
+  display: flex;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bar__nav a {
+  font-weight: 700;
+  font-stretch: var(--w-semi);
+  text-decoration: none;
+  padding-block: 0.4rem;
+  background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat;
+  transition: background-size 220ms var(--ease-out);
+}
+
+.bar__nav a:hover {
+  background-size: 100% 2px;
+}
+
+.bar__phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.bar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.bar__order {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 2.75rem;
+  padding: 0 1rem 0 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 750;
+  font-stretch: var(--w-semi);
+  cursor: pointer;
+  transition: background-color 160ms var(--ease-out);
+}
+
+.bar__order:hover {
+  background: var(--accent-press);
+}
+
+.bar__menu {
+  display: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--white);
+  cursor: pointer;
+}
+
+@media (max-width: 960px) {
+  .bar__menu {
+    display: grid;
+    place-items: center;
+  }
+
+  .bar__actions {
+    margin-left: auto;
+  }
+
+  .bar__nav {
+    position: absolute;
+    inset: 100% 0 auto 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--space-3) var(--gutter) var(--space-6);
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bar--open .bar__nav {
+    display: flex;
+  }
+
+  .bar__nav ul {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .bar__nav li a {
+    display: block;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--step-2);
+    font-stretch: var(--w-condensed);
+    font-weight: 800;
+    background: none;
+  }
+
+  .bar__phone {
+    margin-top: var(--space-5);
+    font-weight: 700;
+  }
+}

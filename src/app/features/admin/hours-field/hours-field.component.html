@@ -1,0 +1,25 @@
+<fieldset class="hours">
+  <legend>{{ label() }}</legend>
+  @for (d of days; track d.key) {
+    @let r = range(d.key);
+    <div class="hours__row">
+      <label class="hours__day">
+        <input type="checkbox" [checked]="!!r" (change)="toggle(d.key, $any($event.target).checked)" />
+        {{ d.label }}
+      </label>
+      @if (r) {
+        <label class="hours__time">
+          <span class="visually-hidden">{{ d.label }}: abre</span>
+          <input type="time" [value]="r.open" (change)="setTime(d.key, 'open', $event)" />
+        </label>
+        <span aria-hidden="true">às</span>
+        <label class="hours__time">
+          <span class="visually-hidden">{{ d.label }}: fecha</span>
+          <input type="time" [value]="r.close" (change)="setTime(d.key, 'close', $event)" />
+        </label>
+      } @else {
+        <span class="hours__closed">Sem entrega</span>
+      }
+    </div>
+  }
+</fieldset>

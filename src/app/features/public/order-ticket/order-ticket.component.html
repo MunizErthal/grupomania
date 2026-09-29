@@ -1,0 +1,57 @@
+<form class="ticket" id="pedido" aria-labelledby="ticket-title" (submit)="$event.preventDefault()">
+  <header class="ticket__head">
+    <h2 id="ticket-title">Seu pedido</h2>
+    <p class="ticket__status" [class.ticket__status--closed]="!isOpen()" aria-live="polite">
+      <span class="ticket__dot" aria-hidden="true"></span>
+      {{ statusText() }}
+    </p>
+  </header>
+
+  <fieldset class="ticket__step">
+    <legend class="stamp">1 · O que acabou?</legend>
+    <div class="ticket__lines">
+      @for (l of lines; track l.id) {
+        <label class="line" [class.line--on]="order.line() === l.id">
+          <input type="radio" name="line" [value]="l.id" [checked]="order.line() === l.id" (change)="order.line.set(l.id)" />
+          <span class="line__label">{{ l.label }}</span>
+          <span class="line__code stamp">{{ l.code }}</span>
+        </label>
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="ticket__step">
+    <legend class="stamp">2 · Qual depósito atende você?</legend>
+    <div class="ticket__depots">
+      @for (d of store.depots(); track d.id) {
+        <label class="depot" [class.depot--on]="order.depot().id === d.id">
+          <input type="radio" name="depot" [value]="d.id" [checked]="order.depot().id === d.id" (change)="order.depotId.set(d.id)" />
+          <span class="depot__name">{{ d.name }}</span>
+          <span class="depot__place">{{ placeOf(d.city, d.district) || 'Endereço em breve' }}</span>
+        </label>
+      }
+    </div>
+    @if (order.depot().neighborhoods) {
+      <p class="ticket__hint">Atende: {{ order.depot().neighborhoods }}</p>
+    }
+  </fieldset>
+
+  <div class="ticket__step">
+    <label class="stamp" for="ticket-detail">3 · Endereço e detalhes (opcional)</label>
+    <textarea
+      id="ticket-detail"
+      rows="2"
+      [placeholder]="placeholder()"
+      [value]="order.detail()"
+      (input)="onDetail($event)"
+    ></textarea>
+  </div>
+
+  <footer class="ticket__foot">
+    <p class="ticket__preview"><span class="visually-hidden">Mensagem que será enviada: </span>“{{ order.message() }}”</p>
+    <a class="seal ticket__send" [href]="order.link()" target="_blank" rel="noopener">
+      <gm-icon name="whatsapp" [size]="22" />
+      Enviar no WhatsApp
+    </a>
+  </footer>
+</form>

@@ -1,0 +1,36 @@
+<header class="bar" [class.bar--open]="menuOpen()">
+  <div class="wrap bar__inner">
+    <a class="bar__logo" href="#topo" (click)="closeMenu()">
+      <img src="logos/grupo.png" [alt]="store.brand().groupName" width="140" height="81" />
+    </a>
+
+    <nav class="bar__nav" id="menu-principal" aria-label="Principal">
+      <ul>
+        @for (item of nav; track item.href) {
+          <li><a [href]="item.href" (click)="closeMenu()">{{ item.label }}</a></li>
+        }
+      </ul>
+      <a class="bar__phone" [href]="tel(store.brand().landline)">
+        <gm-icon name="phone" [size]="18" />
+        <span>{{ store.brand().landline }}</span>
+      </a>
+    </nav>
+
+    <div class="bar__actions">
+      <button type="button" class="bar__order" (click)="order.prepare('gas'); closeMenu()">
+        <gm-icon name="whatsapp" [size]="20" />
+        <span>Pedir</span>
+      </button>
+      <button
+        type="button"
+        class="bar__menu"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="menu-principal"
+        (click)="toggleMenu()"
+      >
+        <gm-icon [name]="menuOpen() ? 'close' : 'menu'" />
+        <span class="visually-hidden">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>

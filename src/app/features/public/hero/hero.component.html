@@ -1,0 +1,43 @@
+<section class="hero" id="topo" aria-labelledby="hero-title">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <h1 id="hero-title">
+        @if (titleParts().head) {
+          {{ titleParts().head }}
+        }
+        <span class="hl">{{ titleParts().tail }}</span>
+      </h1>
+      <p class="hero__lead">{{ store.hero().lead }}</p>
+
+      <ul class="hero__live" aria-label="Situação da entrega agora">
+        <li [class.off]="!delivery.gas().open">
+          <gm-icon name="clock" [size]="18" />
+          {{ delivery.label('gas') }}
+        </li>
+        <li [class.off]="!delivery.agua().open">
+          <gm-icon name="clock" [size]="18" />
+          {{ delivery.label('agua') }}
+        </li>
+      </ul>
+
+      <div class="hero__alt">
+        <a class="tag-link" href="#depositos">Ver os depósitos <gm-icon name="arrowDown" [size]="18" /></a>
+        <a class="tag-link tag-link--quiet" [href]="tel(store.brand().landline)">
+          <gm-icon name="phone" [size]="18" />
+          Prefere ligar? {{ store.brand().landline }}
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__ticket">
+      <gm-order-ticket />
+    </div>
+  </div>
+
+  <div class="wrap hero__marks" aria-hidden="true">
+    <span class="stamp">GLP · Água mineral</span>
+    <span class="stamp">Revenda autorizada Supergasbras</span>
+    <span class="stamp">Desde {{ store.brand().foundedOn.slice(0, 4) }} · {{ years() }} anos</span>
+    <span class="stamp">Estância Velha · Novo Hamburgo</span>
+  </div>
+</section>

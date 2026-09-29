@@ -1,0 +1,32 @@
+@let st = store.station();
+<section class="station" id="estacao-24h" aria-labelledby="estacao-title">
+  <div class="wrap station__grid">
+    <div class="station__numeral" aria-hidden="true">24<span>h</span></div>
+
+    <div class="station__copy">
+      <h2 id="estacao-title">{{ st.title }}</h2>
+      <p class="station__lead">{{ st.lead }}</p>
+      <ul>
+        @for (b of st.bullets; track b) {
+          <li><gm-icon name="check" [size]="20" [stroke]="2.4" />{{ b }}</li>
+        }
+      </ul>
+      @if (st.promo) {
+        <p class="station__promo">{{ st.promo }}</p>
+      }
+      <div class="station__where">
+        <gm-icon name="pin" [size]="20" />
+        <span>{{ st.address }}@if (depot(); as d) {<span>, {{ d.district }} · {{ d.city }}</span>}</span>
+      </div>
+      @if (depot()?.mapsUrl) {
+        <a class="tag-link" [href]="depot()!.mapsUrl" target="_blank" rel="noopener">
+          Como chegar <gm-icon name="external" [size]="18" />
+        </a>
+      }
+    </div>
+
+    <figure class="station__render">
+      <img [src]="st.imageUrl" alt="Estação de autoatendimento de gás 24 horas da Rincão, com botijões à vista e tela de pagamento" loading="lazy" />
+    </figure>
+  </div>
+</section>

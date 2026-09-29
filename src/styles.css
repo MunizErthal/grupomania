@@ -1,0 +1,420 @@
+/* Grupo Mania D'Água — stamped markings, set on quiet neutral ground. */
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo-var.woff') format('woff');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+}
+
+:root {
+  /* neutral grounds (the page alternates between these two, never hue) */
+  --paper: #f3f3f1;
+  --white: #ffffff;
+  --line: #dcdcd8;
+  --line-strong: #bdbdb8;
+
+  /* ink */
+  --ink: #16181a;
+  --ink-soft: #55595c;
+  --ink-mute: #7b7f82;
+
+  /* steel: dark sections (film, 24h, footer) */
+  --steel: #1c2022;
+  --steel-2: #262b2d;
+  --steel-line: #3a4043;
+  --steel-text: #c3c8c9;
+
+  /* the single accent — ordering and emphasis only */
+  --accent: #d33100;
+  --accent-press: #b02900;
+  --accent-soft: #fbeae4;
+
+  /* legacy aliases kept so admin styles keep working */
+  --galv: var(--paper);
+  --galv-2: #e8e8e5;
+  --galv-line: var(--line-strong);
+  --galv-text-soft: var(--ink-soft);
+  --ochre: var(--accent);
+  --ochre-ink-soft: var(--ink-soft);
+
+  --font: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --w-condensed: 62%;
+  --w-semi: 82%;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --step-3: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  --step-4: clamp(2.75rem, 1.6rem + 5vw, 5.25rem);
+  --step-5: clamp(3.4rem, 1.8rem + 7.4vw, 6rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
+
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --max: 1320px;
+  --radius: 10px;
+  --radius-lg: 22px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-soft: 0 1px 2px rgb(22 24 26 / 0.06), 0 12px 32px -12px rgb(22 24 26 / 0.18);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5rem;
+  scrollbar-color: var(--line-strong) var(--paper);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  font-kerning: normal;
+  font-variant-numeric: tabular-nums;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-stretch: var(--w-condensed);
+  font-weight: 850;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.wrap {
+  width: min(100% - 2 * var(--gutter), var(--max));
+  margin-inline: auto;
+}
+
+/* The stamp: text as it is embossed or printed on the cylinder/label. */
+.stamp {
+  font-stretch: var(--w-condensed);
+  font-weight: 700;
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+/* Emphasis inside headlines: colour, never gradient. */
+.hl {
+  color: var(--accent);
+}
+
+/* Primary action: order. The only solid accent surface on the page. */
+.seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.4rem;
+  padding: 0 1.6rem 0 1.3rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 750;
+  font-stretch: var(--w-semi);
+  font-size: 1.125rem;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -12px rgb(211 49 0 / 0.7);
+  transition:
+    transform 180ms var(--ease-out),
+    background-color 180ms var(--ease-out),
+    box-shadow 180ms var(--ease-out);
+}
+
+.seal gm-icon {
+  transition: transform 220ms var(--ease-out);
+}
+
+.seal:hover {
+  background: var(--accent-press);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px -12px rgb(211 49 0 / 0.75);
+}
+
+.seal:hover gm-icon {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.seal:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 10px -6px rgb(211 49 0 / 0.7);
+}
+
+.seal:focus-visible {
+  outline-color: var(--ink);
+}
+
+/* Secondary action: quiet outlined pill. */
+.tag-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0 1.2rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-weight: 700;
+  font-stretch: var(--w-semi);
+  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out), border-color 180ms var(--ease-out);
+}
+
+.tag-link:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+/* A card: white, soft, no frame. */
+.plate {
+  position: relative;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+}
+
+/* Photos: no frame, generous radius, quiet zoom on hover. */
+.photo {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--line);
+}
+
+.photo img,
+.photo video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 900ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .photo:hover img {
+    transform: scale(1.035);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .press-in {
+    animation: press-in 620ms var(--ease-out) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 45%;
+  }
+
+  @keyframes press-in {
+    from {
+      transform: translateY(18px);
+      opacity: 0.55;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+}
+
+/* ---------- Admin (Operate surface): quiet, same materials ---------- */
+.gm-admin {
+  accent-color: var(--ink);
+  min-height: 100dvh;
+  background: var(--galv);
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.gm-admin input[type='text'],
+.gm-admin input[type='url'],
+.gm-admin input[type='tel'],
+.gm-admin input[type='date'],
+.gm-admin input[type='time'],
+.gm-admin input[type='email'],
+.gm-admin input[type='password'],
+.gm-admin textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.7rem;
+  border: 1.5px solid var(--galv-line);
+  border-radius: var(--radius);
+  background: #fff;
+  line-height: 1.4;
+}
+
+.gm-admin textarea {
+  resize: vertical;
+}
+
+.gm-admin input:focus,
+.gm-admin textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgb(211 49 0 / 0.2);
+}
+
+.gm-admin .hint {
+  font-size: var(--step--1);
+  color: var(--galv-text-soft);
+}
+
+.gm-admin .err {
+  font-size: var(--step--1);
+  color: #a3230f;
+  font-weight: 650;
+}
+
+.gm-admin .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.6rem;
+  padding: 0 1rem;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  background: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 140ms var(--ease-out), color 140ms var(--ease-out);
+}
+
+.gm-admin .btn:hover {
+  background: var(--galv-2);
+}
+
+.gm-admin .btn--primary {
+  background: var(--ink);
+  color: #fff;
+}
+
+.gm-admin .btn--primary:hover {
+  background: #000;
+}
+
+.gm-admin .btn--ghost {
+  border-style: dashed;
+  background: transparent;
+}
+
+.gm-admin .btn.btn--primary:disabled {
+  background: var(--steel-2);
+  color: #cfd3d0;
+  opacity: 1;
+}
+
+.gm-admin .btn:disabled,
+.gm-admin .btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.gm-admin .icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  cursor: pointer;
+}
+
+.gm-admin .icon-btn:hover:not(:disabled) {
+  border-color: var(--galv-line);
+  background: var(--galv);
+}
+
+.gm-admin .icon-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.gm-admin .icon-btn--danger:hover:not(:disabled) {
+  color: #a3230f;
+  border-color: #e3b3a8;
+}

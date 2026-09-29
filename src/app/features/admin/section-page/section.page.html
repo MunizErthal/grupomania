@@ -1,0 +1,23 @@
+@if (section(); as s) {
+  <header class="head">
+    <div>
+      <h1>{{ s.title }}</h1>
+      <p class="hint">{{ s.description }}</p>
+    </div>
+    <div class="head__tools">
+      @if (s.preview) {
+        <a class="btn" [href]="'/#' + s.preview" target="_blank" rel="noopener">
+          <gm-icon name="external" [size]="16" /> Ver no site
+        </a>
+      }
+      <button type="button" class="btn btn--ghost" (click)="restore()">Restaurar original</button>
+    </div>
+  </header>
+  <div class="fields">
+    @for (f of s.fields; track f.key + f.label) {
+      <gm-field-editor [field]="f" [base]="[s.key]" />
+    }
+  </div>
+} @else {
+  <p>Seção não encontrada.</p>
+}
