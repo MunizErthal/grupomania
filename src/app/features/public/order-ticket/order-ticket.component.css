@@ -96,7 +96,7 @@
 
 .line:has(input:focus-visible),
 .depot:has(input:focus-visible) {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--accent-text);
   outline-offset: 2px;
 }
 
@@ -123,7 +123,7 @@
 }
 
 .line--on .line__code {
-  color: #ff8a5c;
+  color: var(--accent);
 }
 
 .ticket__depots {

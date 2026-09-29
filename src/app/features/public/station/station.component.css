@@ -12,7 +12,7 @@
 
 .station ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--ink);
 }
 
 .station__grid {
@@ -82,7 +82,7 @@ li gm-icon {
   padding: 0.6rem 0.9rem;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--ink);
   font-weight: 800;
   font-stretch: var(--w-semi);
 }
@@ -105,7 +105,7 @@ li gm-icon {
 }
 
 .station :focus-visible {
-  outline-color: #ff6a33;
+  outline-color: var(--accent);
 }
 
 .station__render {

@@ -68,7 +68,7 @@ h2 {
   font-size: clamp(3.5rem, 2rem + 4vw, 5.5rem);
   line-height: 0.85;
   letter-spacing: -0.03em;
-  color: var(--accent);
+  color: var(--accent-strong);
 }
 
 .water__jug-code span {
@@ -123,7 +123,7 @@ h3 {
 }
 
 .water__services li gm-icon {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .water__photo {

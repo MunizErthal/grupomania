@@ -10,11 +10,11 @@
 
 .foot ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--ink);
 }
 
 .foot :focus-visible {
-  outline-color: #ff6a33;
+  outline-color: var(--accent);
 }
 
 .foot__call {
@@ -80,7 +80,7 @@
 }
 
 .foot a:hover {
-  color: #ff8a5c;
+  color: var(--accent);
   text-decoration-color: currentColor;
 }
 

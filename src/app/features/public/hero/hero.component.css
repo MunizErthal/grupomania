@@ -83,7 +83,7 @@ h1 {
 
 .tag-link--quiet:hover {
   background: transparent;
-  color: var(--accent);
+  color: var(--accent-text);
   border-color: transparent;
 }
 

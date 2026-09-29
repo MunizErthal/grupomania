@@ -8,13 +8,11 @@ import {
   viewChild,
 } from '@angular/core';
 import { ContentStore } from '../../../core/content/content.store';
-import { IconComponent } from '../../../shared/ui/icon.component';
 
 /** The depot's own film, playing like a window into the yard. */
 @Component({
   selector: 'gm-yard-film',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent],
   templateUrl: './yard-film.component.html',
   styleUrl: './yard-film.component.css',
 })

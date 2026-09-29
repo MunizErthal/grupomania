@@ -73,7 +73,7 @@ h2 {
 
 .size__kg {
   width: 20%;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .size__use {
@@ -134,7 +134,7 @@ h3 {
 }
 
 .gas__services li gm-icon {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 @media (max-width: 960px) {

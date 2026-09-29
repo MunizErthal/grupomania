@@ -31,7 +31,7 @@ Depots (source: old site, owner confirmed old-site data wins where conflicting):
 - **Mania D'Água** (matriz) — R. Frederico Hugo Engelmann, 28 – Bela Vista, Estância Velha – RS, 93614-020 — WhatsApp (51) 99662-1660 — fixo 3561-5782 — @maniadiagua — pedido: contate.me/maniadagua
 - **Gás Guarani** — R. São Carlos, 71 – Guarani, Novo Hamburgo – RS, 93520-150 — WhatsApp (51) 99770-3178 — fixo 3527-4949 — @guaranigas — contate.me/gasguarani. Priority neighborhoods: Hamburgo Velho, Vila Nova, Guarani, Operário, Vila Rosa.
 - **Rincão Gás** — R. Rincão, 561 – Rincão, Novo Hamburgo – RS, 93310-460 — WhatsApp (51) 99762-8361 — @rincaogas — contate.me/rincaogas. Has the 24h self-service gas machine ("Portaria 24h").
-- **Primavera Gás** — newest depot (owner confirmed), with a Conveniência store front (Supergasbras). Phones from Instagram signage: (51) 99798-1300 and 3556-2160. Street address: OPEN (fill in via admin).
+- **Primavera Gás** — newest depot (owner confirmed), with a Conveniência store front (Supergasbras). R. Saldanha da Gama, 221 – Primavera, Novo Hamburgo – RS, 93344-290 (owner confirmed). Phones from Instagram signage: (51) 99798-1300 and 3556-2160. Instagram: open.
 
 Hours (old site): gas delivery Mon–Fri 8:00–21:30, Sat 8:00–20:00, Sun 8:00–18:00; water delivery Mon–Fri 8:00–18:00, Sat 8:00–16:00, Sun 8:00–11:00. Weekend/holiday delivery yes.
 
@@ -50,7 +50,7 @@ Instagram bio: "Distribuidora de água mineral e gás · Há 22 anos abastecendo
 
 - Names: Grupo Mania D'Água; Mania D'Água – Distribuidora de Água Mineral e Gás; Gás Guarani; Rincão – Comércio de gás e água mineral; Primavera – Comércio de gás e água mineral.
 - Existing logos (orange + grey) are kept as assets. The owner asked NOT to carry over the old site's design, and for a site that does not look AI-made.
-- Owner-pinned visual constraints (2026-09-29 feedback): accent colour is exactly #d33100; no ochre/gold page backgrounds and no hue-switching between sections (neutral light grounds + dark grey only); photos without frames/borders; the feel should be young and modern. Owner liked: the video band, the dark footer, the section divisions.
+- Owner-pinned visual constraints (2026-09-29 feedback): accent colour is exactly #F58634 (changed from #d33100 on owner request; deeper shades only where text legibility requires); no ochre/gold page backgrounds and no hue-switching between sections (neutral light grounds + dark grey only); photos without frames/borders; the feel should be young and modern. Owner liked: the video band, the dark footer, the section divisions.
 - Language: Brazilian Portuguese, plain and warm, gaúcho neighborhood-business tone.
 
 ## Evidence on Hand

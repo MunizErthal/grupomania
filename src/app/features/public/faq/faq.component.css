@@ -53,7 +53,7 @@ summary gm-icon {
 
 details[open] summary gm-icon {
   transform: rotate(45deg);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 summary:hover span {

@@ -26,10 +26,14 @@
   --steel-line: #3a4043;
   --steel-text: #c3c8c9;
 
-  /* the single accent — ordering and emphasis only */
-  --accent: #d33100;
-  --accent-press: #b02900;
-  --accent-soft: #fbeae4;
+  /* the single accent (owner-pinned #F58634) — ordering and emphasis only.
+     Small text on light grounds uses the deeper --accent-text so it stays legible;
+     solid accent surfaces carry ink text, never white. */
+  --accent: #f58634;
+  --accent-press: #e5711c;
+  --accent-soft: #fef0e6;
+  --accent-text: #b04e12;
+  --accent-strong: #e0691b; /* large type on light grounds (≥3:1) */
 
   /* legacy aliases kept so admin styles keep working */
   --galv: var(--paper);
@@ -104,7 +108,7 @@ body {
 
 ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--ink);
 }
 
 img,
@@ -146,7 +150,7 @@ select {
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--accent-text);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -177,7 +181,7 @@ select {
 
 /* Emphasis inside headlines: colour, never gradient. */
 .hl {
-  color: var(--accent);
+  color: var(--accent-strong);
 }
 
 /* Primary action: order. The only solid accent surface on the page. */
@@ -191,14 +195,14 @@ select {
   border: 0;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
-  font-weight: 750;
+  color: var(--ink);
+  font-weight: 800;
   font-stretch: var(--w-semi);
   font-size: 1.125rem;
   letter-spacing: 0.005em;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 10px 24px -12px rgb(211 49 0 / 0.7);
+  box-shadow: 0 10px 24px -12px rgb(229 113 28 / 0.55);
   transition:
     transform 180ms var(--ease-out),
     background-color 180ms var(--ease-out),
@@ -212,7 +216,7 @@ select {
 .seal:hover {
   background: var(--accent-press);
   transform: translateY(-1px);
-  box-shadow: 0 14px 28px -12px rgb(211 49 0 / 0.75);
+  box-shadow: 0 14px 28px -12px rgb(229 113 28 / 0.6);
 }
 
 .seal:hover gm-icon {
@@ -221,7 +225,7 @@ select {
 
 .seal:active {
   transform: translateY(1px);
-  box-shadow: 0 4px 10px -6px rgb(211 49 0 / 0.7);
+  box-shadow: 0 4px 10px -6px rgb(229 113 28 / 0.55);
 }
 
 .seal:focus-visible {
@@ -333,7 +337,7 @@ select {
 .gm-admin textarea:focus {
   outline: none;
   border-color: var(--ink);
-  box-shadow: 0 0 0 3px rgb(211 49 0 / 0.2);
+  box-shadow: 0 0 0 3px rgb(245 134 52 / 0.35);
 }
 
 .gm-admin .hint {

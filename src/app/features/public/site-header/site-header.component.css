@@ -78,8 +78,8 @@
   border: 0;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
-  font-weight: 750;
+  color: var(--ink);
+  font-weight: 800;
   font-stretch: var(--w-semi);
   cursor: pointer;
   transition: background-color 160ms var(--ease-out);

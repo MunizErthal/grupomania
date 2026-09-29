@@ -31,7 +31,7 @@ import { IconComponent } from '../../../shared/ui/icon.component';
     button {
       display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
       min-height: 3.1rem; border: 0; border-radius: 999px;
-      background: var(--accent); color: #fff; font-weight: 750; font-stretch: 82%; cursor: pointer;
+      background: var(--accent); color: var(--ink); font-weight: 800; font-stretch: 82%; cursor: pointer;
     }
     .mbar__water { background: #fff; color: var(--ink); }
     button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }

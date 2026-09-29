@@ -117,7 +117,7 @@ h2 {
 
 .flag--dark {
   background: var(--accent);
-  color: #fff;
+  color: var(--ink);
   box-shadow: none;
 }
 
@@ -147,7 +147,7 @@ h3 {
 }
 
 .depot__facts dt {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .depot__facts dd {
@@ -190,6 +190,7 @@ h3 {
 
 .depot__wa:hover {
   background: var(--accent);
+  color: var(--ink);
 }
 
 .depot__link {
@@ -201,7 +202,7 @@ h3 {
 }
 
 .depot__link:hover {
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration-color: currentColor;
 }
 
