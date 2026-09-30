@@ -421,6 +421,11 @@ form {
   display: grid;
   gap: 0.6rem;
   padding: 1.35rem 1.25rem 1.25rem;
+  /* flutuante: o total e o botão ficam sempre visíveis enquanto o cliente confere o pedido */
+  position: sticky;
+  bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  z-index: 4;
+  box-shadow: 0 1px 2px rgb(22 24 26 / 0.06), 0 -6px 28px -6px rgb(22 24 26 / 0.22);
 }
 
 .summary__row {
@@ -553,6 +558,19 @@ form {
 }
 
 @media (max-width: 520px) {
+  .summary {
+    gap: 0.4rem;
+    padding: 0.9rem 1rem 0.95rem;
+  }
+  .summary__total {
+    font-size: 1.9rem;
+  }
+  .summary .seal {
+    min-height: 3.3rem;
+  }
+  #total-note {
+    display: none;
+  }
   .fields {
     grid-template-columns: 1fr;
   }
