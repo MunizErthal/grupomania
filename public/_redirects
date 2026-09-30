@@ -1,0 +1,2 @@
+/pedido /pedido-app/ 200
+/pedido/* /pedido-app/ 200

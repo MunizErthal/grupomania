@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Confirme seu pedido · Grupo Mania D'Água</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#f3f3f1" />
+    <meta property="og:title" content="Confirme seu pedido · Grupo Mania D'Água" />
+    <meta property="og:description" content="Confira os itens, o endereço e o pagamento e toque em Confirmar." />
+    <meta property="og:image" content="https://www.grupomaniadagua.com.br/media/patio-poster.jpg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preload" href="/fonts/archivo-var.woff" as="font" type="font/woff" crossorigin />
+    <link rel="stylesheet" href="/pedido-app/pedido.css" />
+  </head>
+  <body>
+    <header class="top">
+      <a href="/" class="brand" aria-label="Grupo Mania D'Água — página inicial">
+        <img src="/logos/grupo.png" alt="Grupo Mania D'Água" width="84" height="48" />
+      </a>
+      <span class="stamp top__store" id="store-name"></span>
+    </header>
+
+    <main class="page" id="app">
+      <!-- ── Revisão do pedido ─────────────────────────── -->
+      <section id="view-review" hidden>
+        <h1 class="title">Confira seu pedido<span class="hl">.</span></h1>
+        <p class="lead">Está tudo certo? É só tocar em <b>Confirmar pedido</b>. Se precisar, ajuste aqui mesmo.</p>
+
+        <form id="order-form" novalidate>
+          <section class="plate card" aria-labelledby="h-items">
+            <h2 class="stamp card__label" id="h-items">Itens</h2>
+            <ul class="items" id="items"></ul>
+            <div class="add" id="add-box">
+              <label class="visually-hidden" for="add-select">Adicionar produto</label>
+              <select id="add-select"></select>
+              <button type="button" class="tag-link sm" id="add-btn">+ Adicionar</button>
+            </div>
+          </section>
+
+          <section class="plate card" aria-labelledby="h-delivery">
+            <h2 class="stamp card__label" id="h-delivery">Entrega</h2>
+            <div class="fields">
+              <label class="field">
+                <span>Nome</span>
+                <input name="nome" autocomplete="name" maxlength="80" required />
+              </label>
+              <label class="field">
+                <span>Telefone (WhatsApp)</span>
+                <input name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(51) 99999-9999" required />
+              </label>
+              <label class="field field--wide">
+                <span>Endereço de entrega</span>
+                <input name="endereco" autocomplete="street-address" maxlength="200" placeholder="Rua, número e bairro" required />
+              </label>
+              <label class="field field--wide">
+                <span>Complemento ou referência <em>(opcional)</em></span>
+                <input name="complemento" maxlength="120" placeholder="Apto, bloco, ponto de referência" />
+              </label>
+              <label class="field">
+                <span>CPF <em>(opcional)</em></span>
+                <input name="cpf" inputmode="numeric" maxlength="18" placeholder="000.000.000-00" />
+              </label>
+            </div>
+          </section>
+
+          <section class="plate card" aria-labelledby="h-pay">
+            <h2 class="stamp card__label" id="h-pay">Pagamento</h2>
+            <div class="pays" role="radiogroup" aria-labelledby="h-pay">
+              <label class="pay"><input type="radio" name="pagamento" value="PIX" /><span>Pix</span></label>
+              <label class="pay"><input type="radio" name="pagamento" value="DINHEIRO" /><span>Dinheiro</span></label>
+              <label class="pay"><input type="radio" name="pagamento" value="DEBITO" /><span>Cartão de débito</span></label>
+              <label class="pay"><input type="radio" name="pagamento" value="CREDITO" /><span>Cartão de crédito</span></label>
+            </div>
+            <label class="field troco" id="troco-box" hidden>
+              <span>Troco para quanto? <em>(deixe vazio se não precisar)</em></span>
+              <input name="troco" inputmode="decimal" maxlength="10" placeholder="Ex.: 200" />
+            </label>
+            <label class="field field--wide">
+              <span>Observação <em>(opcional)</em></span>
+              <textarea name="obs" rows="2" maxlength="300" placeholder="Ex.: deixar na portaria"></textarea>
+            </label>
+          </section>
+
+          <div class="summary plate">
+            <div class="summary__row">
+              <span class="stamp">Total estimado</span>
+              <strong class="summary__total" id="total">—</strong>
+            </div>
+            <p class="small muted" id="total-note">O valor final é confirmado pela loja.</p>
+            <p class="error" id="form-error" role="alert" hidden></p>
+            <button type="submit" class="seal" id="confirm-btn">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+              Confirmar pedido
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ── Depois de confirmar ───────────────────────── -->
+      <section id="view-done" hidden>
+        <div class="plate card done">
+          <div class="done__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="34" height="34"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+          </div>
+          <h1 class="title" id="done-title">Pedido enviado<span class="hl">.</span></h1>
+          <p class="lead" id="done-text">Já avisamos a loja. Esta página mostra quando o pedido for confirmado.</p>
+          <ol class="steps" id="steps">
+            <li data-step="novo"><span class="stamp">Enviado</span></li>
+            <li data-step="recebido"><span class="stamp">Recebido pela loja</span></li>
+            <li data-step="confirmado"><span class="stamp">Confirmado</span></li>
+          </ol>
+          <p class="small muted" id="done-code"></p>
+          <p class="small muted">Pode fechar esta página. Qualquer dúvida, é só responder no WhatsApp.</p>
+        </div>
+      </section>
+
+      <!-- ── Link inválido / erro ──────────────────────── -->
+      <section id="view-error" hidden>
+        <div class="plate card">
+          <h1 class="title">Não conseguimos abrir este pedido<span class="hl">.</span></h1>
+          <p class="lead" id="error-text">Peça um novo link no WhatsApp.</p>
+        </div>
+      </section>
+
+      <p class="loading" id="loading">Carregando seu pedido…</p>
+    </main>
+
+    <script src="/pedido-app/pedido.js" type="module"></script>
+  </body>
+</html>

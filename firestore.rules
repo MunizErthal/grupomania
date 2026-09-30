@@ -1,15 +1,54 @@
 rules_version = '2';
 // Conteúdo do site: qualquer um lê; só o(s) administrador(es) escrevem.
 // Administradores: usuários criados no Firebase Authentication.
+//
+// Pedidos pelo link do WhatsApp (página /pedido/...):
+//  - pedidos/{id}: o cliente só CRIA (status "novo", campos conferidos abaixo) e só LÊ o próprio
+//    pedido pelo id (aleatório, impossível de adivinhar). Ninguém lista, altera ou apaga.
+//    O Gateway Mania, no PC da loja, usa uma conta de serviço (acesso de administrador, fora destas regras).
+//  - catalogo/{número}: produtos e preços publicados pelo Gateway; leitura pública.
 service cloud.firestore {
   match /databases/{database}/documents {
     function isAdmin() {
       return request.auth != null
         && request.auth.token.email in ['ismael@mania.com', 'marcia@mania.com'];
     }
+
+    function optionalText(d, field, max) {
+      return !(field in d) || (d[field] is string && d[field].size() <= max);
+    }
+
+    function validOrder(d) {
+      return d.keys().hasAll(['filial', 'status', 'nome', 'telefone', 'endereco', 'pagamento', 'itens'])
+        && d.keys().hasOnly(['filial', 'status', 'origem', 'nome', 'telefone', 'cpf', 'endereco', 'complemento',
+                             'pagamento', 'troco', 'obs', 'itens', 'criadoEm'])
+        && d.status == 'novo'
+        && d.filial is string && d.filial.matches('^[a-z0-9-]{1,60}$')
+        && d.nome is string && d.nome.size() > 0 && d.nome.size() <= 80
+        && d.telefone is string && d.telefone.size() >= 10 && d.telefone.size() <= 30
+        && d.endereco is string && d.endereco.size() > 0 && d.endereco.size() <= 200
+        && d.pagamento in ['PIX', 'DINHEIRO', 'DEBITO', 'CREDITO']
+        && d.itens is list && d.itens.size() > 0 && d.itens.size() <= 30
+        && (!('troco' in d) || (d.troco is number && d.troco > 0 && d.troco <= 10000))
+        && optionalText(d, 'cpf', 18)
+        && optionalText(d, 'complemento', 120)
+        && optionalText(d, 'obs', 300)
+        && optionalText(d, 'origem', 20)
+        && optionalText(d, 'criadoEm', 40);
+    }
+
     match /site/content {
       allow read: if true;
       allow write: if isAdmin();
+    }
+    match /pedidos/{id} {
+      allow get: if true;
+      allow create: if validOrder(request.resource.data);
+      allow list, update, delete: if false;
+    }
+    match /catalogo/{numero} {
+      allow read: if true;
+      allow write: if false;
     }
     match /{document=**} {
       allow read, write: if false;

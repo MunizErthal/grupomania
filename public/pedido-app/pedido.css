@@ -1,0 +1,568 @@
+/* Página de confirmação do pedido (link enviado pelo agente do WhatsApp).
+   Mesmo sistema visual do site: Archivo, fundo papel, cartões brancos, um único acento (pedido). */
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo-var.woff') format('woff');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+}
+
+:root {
+  --paper: #f3f3f1;
+  --white: #ffffff;
+  --line: #dcdcd8;
+  --line-strong: #bdbdb8;
+  --ink: #16181a;
+  --ink-soft: #55595c;
+  --ink-mute: #7b7f82;
+  --accent: #f58634;
+  --accent-press: #e5711c;
+  --accent-soft: #fef0e6;
+  --accent-text: #b04e12;
+  --accent-strong: #e0691b;
+  --ok: #1c7a44;
+  --danger: #b3261e;
+  --font: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --w-condensed: 62%;
+  --w-semi: 82%;
+  --radius-lg: 22px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-soft: 0 1px 2px rgb(22 24 26 / 0.06), 0 12px 32px -12px rgb(22 24 26 / 0.18);
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-text);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.stamp {
+  font-stretch: var(--w-condensed);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.hl {
+  color: var(--accent-strong);
+}
+
+.muted {
+  color: var(--ink-soft);
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+/* ── Topo ───────────────────────────────── */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem var(--gutter);
+  background: rgb(243 243 241 / 0.86);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand img {
+  height: 44px;
+  width: auto;
+}
+
+.top__store {
+  color: var(--ink-soft);
+  text-align: right;
+}
+
+/* ── Página ─────────────────────────────── */
+.page {
+  width: min(100% - 2 * var(--gutter), 640px);
+  margin: 0 auto;
+  padding: 1.75rem 0 calc(3rem + env(safe-area-inset-bottom));
+}
+
+.title {
+  font-stretch: var(--w-condensed);
+  font-weight: 850;
+  font-size: clamp(2.3rem, 1.6rem + 3vw, 3.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+.lead {
+  margin: 0.75rem 0 1.5rem;
+  color: var(--ink-soft);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.loading {
+  padding: 3rem 0;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+.plate {
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
+}
+
+.card {
+  padding: 1.35rem 1.25rem;
+}
+
+.card__label {
+  margin-bottom: 0.9rem;
+  color: var(--ink-soft);
+}
+
+/* ── Itens ──────────────────────────────── */
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 0.9rem;
+  align-items: center;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.item:first-child {
+  border-top: 0;
+  padding-top: 0.2rem;
+}
+
+.item__name {
+  font-weight: 750;
+  font-stretch: var(--w-semi);
+  font-size: 1.125rem;
+  line-height: 1.2;
+}
+
+.item__price {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.item__warn {
+  grid-column: 1 / -1;
+  color: var(--accent-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.qty button {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--white);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgb(22 24 26 / 0.12);
+}
+
+.qty button:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+.qty output {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.item__remove {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-mute);
+  font-size: 0.88rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.add {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--line-strong);
+}
+
+.add select {
+  flex: 1;
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0 0.8rem;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+}
+
+.tag-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0 1.1rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  font-weight: 700;
+  font-stretch: var(--w-semi);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out);
+}
+
+.tag-link:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+/* ── Campos ─────────────────────────────── */
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: var(--ink-soft);
+}
+
+.field em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--ink-mute);
+}
+
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.7rem 0.8rem;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  resize: vertical;
+  transition: border-color 150ms, background-color 150ms;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: var(--white);
+}
+
+.field.invalid input {
+  border-color: var(--danger);
+  background: #fdf1f0;
+}
+
+/* ── Pagamento ──────────────────────────── */
+.pays {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.pay {
+  position: relative;
+  cursor: pointer;
+}
+
+.pay input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pay span {
+  display: flex;
+  align-items: center;
+  min-height: 3.2rem;
+  padding: 0.6rem 0.9rem;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  font-weight: 750;
+  font-stretch: var(--w-semi);
+  line-height: 1.15;
+  transition: background-color 150ms, color 150ms, border-color 150ms;
+}
+
+.pay input:checked + span {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.pay input:focus-visible + span {
+  outline: 3px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+.pays.invalid .pay span {
+  border-color: var(--danger);
+}
+
+.troco {
+  margin-bottom: 0.9rem;
+}
+
+/* ── Resumo e botão ─────────────────────── */
+.summary {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.35rem 1.25rem 1.25rem;
+}
+
+.summary__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.summary__row .stamp {
+  color: var(--ink-soft);
+}
+
+.summary__total {
+  font-stretch: var(--w-condensed);
+  font-weight: 900;
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.error {
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  background: #fdf1f0;
+  color: var(--danger);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 3.6rem;
+  margin-top: 0.3rem;
+  padding: 0 1.6rem 0 1.3rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--ink);
+  font-weight: 800;
+  font-stretch: var(--w-semi);
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -12px rgb(229 113 28 / 0.55);
+  transition: transform 180ms var(--ease-out), background-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+}
+
+.seal:hover {
+  background: var(--accent-press);
+  transform: translateY(-1px);
+}
+
+.seal:active {
+  transform: translateY(1px);
+}
+
+.seal:focus-visible {
+  outline-color: var(--ink);
+}
+
+.seal[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
+}
+
+/* ── Enviado ────────────────────────────── */
+.done {
+  display: grid;
+  gap: 0.2rem;
+  padding: 2rem 1.4rem 1.6rem;
+}
+
+.done__mark {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.done .lead {
+  margin-bottom: 1.2rem;
+}
+
+.steps {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--ink-mute);
+}
+
+.steps li::before {
+  content: '';
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  flex: none;
+}
+
+.steps li.on {
+  color: var(--ink);
+}
+
+.steps li.on::before {
+  border-color: var(--ok);
+  background: var(--ok);
+  box-shadow: 0 0 0 3px rgb(28 122 68 / 0.18);
+}
+
+.steps li.current::before {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgb(245 134 52 / 0.25);
+}
+
+@media (max-width: 520px) {
+  .fields {
+    grid-template-columns: 1fr;
+  }
+  .field {
+    grid-column: 1 / -1;
+  }
+  .card {
+    padding: 1.2rem 1rem;
+  }
+  .add {
+    flex-direction: column;
+  }
+}
