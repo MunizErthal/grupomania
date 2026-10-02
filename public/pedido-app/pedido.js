@@ -2,17 +2,28 @@
 //
 // O agente do WhatsApp envia um link como:
 //   /pedido/principal?itens=2xAGUA20,1xGAS13&nome=Maria+Silva&tel=51999999999&end=Rua+X+100&pag=DINHEIRO&troco=100
-// O cliente confere, ajusta se precisar e confirma. O pedido é gravado no Firestore (pedidos/{id})
+// O cliente confere, ajusta se precisar e confirma. O pedido é gravado no Firestore
+// (clientes/{cliente}/pedidos/{id})
 // e o Gateway Mania, no PC da loja, busca, lança no ATEC e atualiza o status aqui.
 //
 // Sem SDK do Firebase: só a API REST, com a chave pública do app web (as regras do Firestore
-// limitam o que pode ser gravado). Produtos e preços vêm de catalogo/{número}, publicado pelo Gateway.
+// limitam o que pode ser gravado). Produtos e preços vêm de clientes/{cliente}/catalogo/{número}, publicado pelo Gateway.
+//
+// Os dados ficam separados por cliente (empresa) desde já — o mesmo formato da futura plataforma online,
+// onde o cliente virá do endereço (/{cliente}/{número}). Aqui o site é de um cliente só.
 
 const FIREBASE = {
   apiKey: 'AIzaSyBvs2dIQhB8SXEaIGERrnJ3GGP-PkmL4mI',
   projectId: 'grupomania',
 };
+/** Empresa dona deste site (identificador na plataforma). */
+const CLIENTE = 'grupomania';
 const BASE = `https://firestore.googleapis.com/v1/projects/${FIREBASE.projectId}/databases/(default)/documents`;
+const ORDERS = `clientes/${CLIENTE}/pedidos`;
+const CATALOG = `clientes/${CLIENTE}/catalogo`;
+const LOOKUPS = `clientes/${CLIENTE}/consultas`;
+/** Pedido não processado some sozinho do Firebase depois deste prazo (política de TTL no campo expiraEm). */
+const EXPIRE_DAYS = 30;
 const PAYMENTS = ['PIX', 'DINHEIRO', 'DEBITO', 'CREDITO'];
 const STATUS_ORDER = ['novo', 'recebido', 'confirmado'];
 
@@ -22,7 +33,10 @@ const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL
 const state = {
   filial: '',
   catalog: null, // { nome, produtos: [{ codigo, nome, preco }] }
-  items: [], // { codigo, qtd }
+  items: [], // { codigo, qtd, escolha? } — escolha = marca escolhida quando o código é um produto genérico (ex.: AGUA)
+  // cadastro pelo telefone: 'idle' | 'searching' | 'found' | 'new' | 'unknown' (sem resposta da loja)
+  lookup: { status: 'idle', phone: '', id: '', nome: '', endereco: null },
+  linkAddress: '',
 };
 
 // ── Leitura do link ──────────────────────────────────────
@@ -101,7 +115,9 @@ const decodeFields = (fields) => Object.fromEntries(Object.entries(fields).map((
 
 function encode(v) {
   if (v === null || v === undefined) return { nullValue: null };
+  if (v instanceof Date) return { timestampValue: v.toISOString() };
   if (typeof v === 'string') return { stringValue: v };
+  if (typeof v === 'boolean') return { booleanValue: v };
   if (typeof v === 'number') return Number.isInteger(v) ? { integerValue: String(v) } : { doubleValue: v };
   if (Array.isArray(v)) return { arrayValue: { values: v.map(encode) } };
   return { mapValue: { fields: encodeFields(v) } };
@@ -149,21 +165,45 @@ function recall() {
 
 // ── Tela de revisão ──────────────────────────────────────
 const product = (codigo) => state.catalog?.produtos?.find((p) => p.codigo === codigo) ?? null;
+/** Produto genérico (ex.: AGUA = "Água 20 litros", o cliente escolhe a marca). */
+const group = (codigo) => state.catalog?.grupos?.find((g) => g.codigo === codigo) ?? null;
+/** Código que vai no pedido: a marca escolhida, se o item for genérico. */
+const effective = (item) => (group(item.codigo) ? item.escolha ?? '' : item.codigo);
+
+/** Marca a mesma opção do último pedido do cliente (ou a única opção) nos itens genéricos ainda sem escolha. */
+function applySuggestions() {
+  const last = state.lookup.ultimoPedido ?? [];
+  for (const item of state.items) {
+    const g = group(item.codigo);
+    if (!g || item.escolha) continue;
+    if (g.opcoes.length === 1) {
+      item.escolha = g.opcoes[0];
+      continue;
+    }
+    const previous = last.find((l) => g.opcoes.includes(l.codigo));
+    if (previous) {
+      item.escolha = previous.codigo;
+      item.sugerido = true;
+    }
+  }
+}
 
 function renderItems() {
   const list = $('items');
   list.replaceChildren(
     ...state.items.map((item, index) => {
-      const p = product(item.codigo);
+      const g = group(item.codigo);
+      const p = product(effective(item));
       const li = document.createElement('li');
-      li.className = 'item';
+      li.className = g ? 'item item--group' : 'item';
       const info = document.createElement('div');
       const name = document.createElement('div');
       name.className = 'item__name';
-      name.textContent = p ? p.nome : item.codigo;
+      name.textContent = g ? (p ? p.nome : g.nome) : p ? p.nome : item.codigo;
       const price = document.createElement('div');
       price.className = 'item__price';
-      price.textContent = p && typeof p.preco === 'number' ? `${brl(p.preco)} cada` : state.catalog ? '' : 'Preço confirmado pela loja';
+      price.textContent =
+        p && typeof p.preco === 'number' ? `${brl(p.preco)} cada` : g ? 'Escolha a marca abaixo' : state.catalog ? '' : 'Preço confirmado pela loja';
       info.append(name, price);
 
       const qty = document.createElement('div');
@@ -176,7 +216,8 @@ function renderItems() {
       qty.append(minus, out, plus);
 
       li.append(info, qty);
-      if (state.catalog && !p) {
+      if (g) li.append(brandPicker(item, g));
+      if (state.catalog && !g && !p) {
         const warn = document.createElement('div');
         warn.className = 'item__warn';
         warn.textContent = 'Não encontramos este produto. Remova e escolha na lista abaixo.';
@@ -202,6 +243,48 @@ function renderItems() {
   }
   renderAddOptions();
   renderTotal();
+}
+
+/** Opções de marca de um item genérico (ex.: "Água 20 litros"). */
+function brandPicker(item, g) {
+  const box = document.createElement('div');
+  box.className = 'brands';
+  box.setAttribute('role', 'radiogroup');
+  box.setAttribute('aria-label', `Marca — ${g.nome}`);
+  if (item.sugerido && item.escolha) {
+    const tag = document.createElement('p');
+    tag.className = 'brands__hint';
+    tag.textContent = 'Igual ao seu último pedido. Pode trocar se quiser.';
+    box.append(tag);
+  }
+  for (const codigo of g.opcoes) {
+    const p = product(codigo);
+    if (!p) continue;
+    const label = document.createElement('label');
+    label.className = 'brand';
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = `marca-${state.items.indexOf(item)}`;
+    input.value = codigo;
+    input.checked = item.escolha === codigo;
+    input.addEventListener('change', () => {
+      item.escolha = codigo;
+      item.sugerido = false;
+      renderItems();
+    });
+    const text = document.createElement('span');
+    const n = document.createElement('b');
+    n.textContent = p.nome;
+    text.append(n);
+    if (typeof p.preco === 'number') {
+      const v = document.createElement('span');
+      v.textContent = brl(p.preco);
+      text.append(v);
+    }
+    label.append(input, text);
+    box.append(label);
+  }
+  return box;
 }
 
 function button(label, aria, onClick) {
@@ -244,12 +327,17 @@ function renderTotal() {
   let total = 0;
   let complete = state.items.length > 0;
   for (const item of state.items) {
-    const p = product(item.codigo);
+    const p = product(effective(item));
     if (p && typeof p.preco === 'number') total += p.preco * item.qtd;
     else complete = false;
   }
-  $('total').textContent = state.items.length === 0 ? '—' : complete ? brl(total) : total > 0 ? `${brl(total)} +` : 'A confirmar';
-  $('total-note').textContent = complete ? 'O valor final é confirmado pela loja.' : 'Alguns preços serão confirmados pela loja.';
+  const pending = state.items.some((i) => group(i.codigo) && !i.escolha);
+  $('total').textContent = state.items.length === 0 || (pending && total === 0) ? '—' : complete ? brl(total) : total > 0 ? `${brl(total)} +` : 'A confirmar';
+  $('total-note').textContent = pending
+    ? 'Escolha a marca para ver o total.'
+    : complete
+      ? 'O valor final é confirmado pela loja.'
+      : 'Alguns preços serão confirmados pela loja.';
 }
 
 const form = $('order-form');
@@ -268,10 +356,134 @@ function fill(link) {
   field('endereco').value = link.end;
   field('complemento').value = link.comp;
   field('obs').value = link.obs;
+  state.linkAddress = link.end;
   if (link.pag) form.querySelector(`input[name="pagamento"][value="${link.pag}"]`).checked = true;
   if (link.troco) field('troco').value = String(link.troco).replace('.', ',');
+  // informações adicionais já vêm abertas se o atendimento preencheu alguma
+  if (link.cpf || link.comp || link.obs) $('more').open = true;
   updateTroco();
+  renderDelivery();
+  if (phoneDigits(link.tel).length >= 10) void lookupCustomer();
 }
+
+// ── Cadastro pelo telefone ───────────────────────────────
+// A página pergunta à loja (Firestore → Gateway → ATEC) se o WhatsApp já tem cadastro;
+// se tiver, o cliente só confirma o endereço. Sem resposta em alguns segundos, pede o endereço.
+const phoneDigits = (text) => {
+  let d = String(text ?? '').replace(/\D/g, '');
+  if (d.length > 11 && d.startsWith('55')) d = d.slice(2);
+  return d;
+};
+
+let lookupTimer = null;
+field('telefone').addEventListener('input', () => {
+  clearTimeout(lookupTimer);
+  const digits = phoneDigits(field('telefone').value);
+  if (digits !== state.lookup.phone && state.lookup.status !== 'idle') {
+    state.lookup = { status: 'idle', phone: '', id: '', nome: '', endereco: null };
+    renderDelivery();
+  }
+  if (digits.length === 10 || digits.length === 11) lookupTimer = setTimeout(() => void lookupCustomer(), 600);
+});
+field('telefone').addEventListener('blur', () => {
+  field('telefone').value = formatPhone(field('telefone').value);
+});
+
+async function lookupCustomer() {
+  const digits = phoneDigits(field('telefone').value);
+  if (digits.length < 10 || digits.length > 11 || digits === state.lookup.phone) return;
+  const id = newId();
+  state.lookup = { status: 'searching', phone: digits, id, nome: '', endereco: null };
+  renderDelivery();
+  try {
+    await createDoc(LOOKUPS, id, {
+      filial: state.filial,
+      telefone: digits,
+      status: 'nova',
+      criadoEm: new Date().toISOString(),
+      expiraEm: new Date(Date.now() + 60 * 60_000),
+    });
+  } catch {
+    if (state.lookup.id === id) ((state.lookup.status = 'unknown'), renderDelivery());
+    return;
+  }
+  const started = Date.now();
+  while (state.lookup.id === id && Date.now() - started < 15_000) {
+    await new Promise((r) => setTimeout(r, 1500));
+    if (state.lookup.id !== id) return; // o cliente mudou o telefone
+    try {
+      const doc = await getDoc(`${LOOKUPS}/${id}`);
+      if (doc?.status === 'respondida') {
+        const ultimoPedido = Array.isArray(doc.ultimoPedido) ? doc.ultimoPedido : [];
+        if (doc.encontrado && doc.endereco && (doc.endereco.rua || doc.endereco.bairro)) {
+          state.lookup = { ...state.lookup, status: 'found', nome: doc.nome ?? '', endereco: doc.endereco, ultimoPedido };
+        } else {
+          state.lookup = { ...state.lookup, status: 'new', ultimoPedido };
+        }
+        renderDelivery();
+        // "água" sem marca: marca a mesma do último pedido
+        applySuggestions();
+        renderItems();
+        return;
+      }
+    } catch {
+      /* tenta de novo */
+    }
+  }
+  if (state.lookup.id === id) ((state.lookup.status = 'unknown'), renderDelivery());
+}
+
+const titleCase = (t) =>
+  String(t ?? '')
+    .toLowerCase()
+    .replace(/(^|\s)(\p{L})/gu, (m, sp, ch) => sp + ch.toUpperCase())
+    .replace(/\s(De|Da|Do|Das|Dos|E)\s/g, (m) => m.toLowerCase());
+
+function formatAddress(e) {
+  const street = [titleCase(e.rua), e.numero].filter(Boolean).join(', ');
+  return [street, e.complemento, titleCase(e.bairro), titleCase(e.cidade)].filter(Boolean).join(' — ');
+}
+
+function destino() {
+  return form.querySelector('input[name="destino"]:checked')?.value ?? 'cadastro';
+}
+
+function renderDelivery() {
+  const { status, nome, endereco } = state.lookup;
+  const msg = $('lookup-status');
+  const found = status === 'found';
+  msg.hidden = status === 'idle' || found;
+  msg.className = `lookup lookup--${status}`;
+  msg.textContent =
+    status === 'searching'
+      ? 'Procurando seu cadastro…'
+      : status === 'new'
+        ? 'Primeiro pedido por aqui? Informe seu nome e o endereço de entrega.'
+        : status === 'unknown'
+          ? 'Informe o endereço de entrega.'
+          : '';
+  $('found-box').hidden = !found;
+  if (found) {
+    const first = titleCase(String(nome).split(/\s+/)[0] ?? '');
+    $('found-hello').textContent = first ? `Olá, ${first}! Encontramos seu cadastro.` : 'Encontramos seu cadastro.';
+    $('found-address').textContent = formatAddress(endereco);
+    // endereço que o cliente passou no WhatsApp tem preferência: deixa "outro endereço" marcado
+    if (state.linkAddress && !$('found-box').dataset.touched) {
+      form.querySelector('input[name="destino"][value="outro"]').checked = true;
+    }
+  }
+  const needsAddress = !found || destino() === 'outro';
+  $('address-field').hidden = !needsAddress;
+  // nome só é pedido para quem ainda não tem cadastro
+  $('name-field').hidden = found || status === 'idle' || status === 'searching';
+}
+form.querySelectorAll('input[name="destino"]').forEach((r) =>
+  r.addEventListener('change', () => {
+    $('found-box').dataset.touched = '1';
+    renderDelivery();
+    if (destino() === 'outro') field('endereco').focus();
+  }),
+);
 
 function formatPhone(text) {
   let d = text.replace(/\D/g, '');
@@ -286,11 +498,19 @@ function validate() {
   form.querySelectorAll('.invalid').forEach((el) => el.classList.remove('invalid'));
   const mark = (name) => field(name).closest('.field').classList.add('invalid');
   if (state.items.length === 0) problems.push('Escolha pelo menos um produto.');
-  if (state.catalog && state.items.some((i) => !product(i.codigo))) problems.push('Remova o produto que não encontramos.');
-  if (!field('nome').value.trim()) (problems.push('Informe seu nome.'), mark('nome'));
-  const phone = field('telefone').value.replace(/\D/g, '');
-  if (phone.length < 10 || phone.length > 13) (problems.push('Informe o telefone com DDD.'), mark('telefone'));
-  if (!field('endereco').value.trim()) (problems.push('Informe o endereço de entrega.'), mark('endereco'));
+  if (state.items.some((i) => group(i.codigo) && !i.escolha)) {
+    problems.push('Escolha a marca da água.');
+    document.querySelector('.item--group .brands')?.classList.add('invalid');
+  }
+  if (state.catalog && state.items.some((i) => !group(i.codigo) && !product(i.codigo))) problems.push('Remova o produto que não encontramos.');
+  const phone = phoneDigits(field('telefone').value);
+  if (phone.length < 10 || phone.length > 11) (problems.push('Informe seu WhatsApp com DDD.'), mark('telefone'));
+  const found = state.lookup.status === 'found';
+  if ((!found || destino() === 'outro') && !field('endereco').value.trim()) (problems.push('Informe o endereço de entrega.'), mark('endereco'));
+  if (!found && !field('nome').value.trim() && state.lookup.status !== 'searching') {
+    if (!$('name-field').hidden) (problems.push('Informe seu nome.'), mark('nome'));
+  }
+  if (state.lookup.status === 'searching') problems.push('Aguarde um instante: estamos procurando seu cadastro.');
   const pag = form.querySelector('input[name="pagamento"]:checked')?.value;
   if (!pag) {
     problems.push('Escolha a forma de pagamento.');
@@ -317,20 +537,27 @@ form.addEventListener('submit', async (event) => {
   btn.lastChild.textContent = ' Enviando…';
 
   const pag = form.querySelector('input[name="pagamento"]:checked').value;
+  const found = state.lookup.status === 'found';
+  const useRegistered = found && destino() === 'cadastro';
   const data = {
     filial: state.filial,
     status: 'novo',
     origem: 'link',
-    nome: field('nome').value.trim().slice(0, 80),
-    telefone: field('telefone').value.replace(/[^\d+]/g, '').slice(0, 30),
-    endereco: field('endereco').value.trim().slice(0, 200),
+    telefone: phoneDigits(field('telefone').value).slice(0, 30),
     pagamento: pag,
     itens: state.items.map((i) => {
-      const p = product(i.codigo);
-      return p && typeof p.preco === 'number' ? { codigo: i.codigo, qtd: i.qtd, preco: p.preco } : { codigo: i.codigo, qtd: i.qtd };
+      const codigo = effective(i);
+      const p = product(codigo);
+      return p && typeof p.preco === 'number' ? { codigo, qtd: i.qtd, preco: p.preco } : { codigo, qtd: i.qtd };
     }),
     criadoEm: new Date().toISOString(),
+    expiraEm: new Date(Date.now() + EXPIRE_DAYS * 86_400_000),
   };
+  const nome = (found ? state.lookup.nome : field('nome').value).trim().slice(0, 80);
+  if (nome) data.nome = nome;
+  if (useRegistered) data.usarCadastro = true;
+  else data.endereco = field('endereco').value.trim().slice(0, 200);
+  if (state.lookup.id && state.lookup.status !== 'idle') data.consulta = state.lookup.id;
   const optional = {
     cpf: field('cpf').value.trim().slice(0, 18),
     complemento: field('complemento').value.trim().slice(0, 120),
@@ -342,7 +569,7 @@ form.addEventListener('submit', async (event) => {
 
   const id = newId();
   try {
-    await createDoc('pedidos', id, data);
+    await createDoc(ORDERS, id, data);
   } catch {
     btn.disabled = false;
     btn.lastChild.textContent = ' Confirmar pedido';
@@ -372,7 +599,7 @@ function showDone(id) {
   const started = Date.now();
   const poll = async () => {
     try {
-      const doc = await getDoc(`pedidos/${id}`);
+      const doc = await getDoc(`${ORDERS}/${id}`);
       if (doc) renderStatus(doc);
       if (doc && ['confirmado', 'cancelado', 'erro'].includes(doc.status)) return;
     } catch {
@@ -417,7 +644,7 @@ async function init() {
   const previous = recall();
   if (previous) {
     try {
-      const doc = await getDoc(`pedidos/${previous}`);
+      const doc = await getDoc(`${ORDERS}/${previous}`);
       if (doc) {
         $('store-name').textContent = '';
         showDone(previous);
@@ -430,12 +657,13 @@ async function init() {
   }
 
   try {
-    state.catalog = await getDoc(`catalogo/${link.filial}`);
+    state.catalog = await getDoc(`${CATALOG}/${link.filial}`);
   } catch {
     state.catalog = null; // sem catálogo: mostra os códigos e a loja confirma
   }
   if (state.catalog?.nome) $('store-name').textContent = state.catalog.nome;
   state.items = link.itens;
+  applySuggestions();
   fill(link);
   renderItems();
   show('view-review');

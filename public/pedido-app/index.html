@@ -25,7 +25,7 @@
       <!-- ── Revisão do pedido ─────────────────────────── -->
       <section id="view-review" hidden>
         <h1 class="title">Confira seu pedido<span class="hl">.</span></h1>
-        <p class="lead">Está tudo certo? É só tocar em <b>Confirmar pedido</b>. Se precisar, ajuste aqui mesmo.</p>
+        <p class="lead">Confira os itens, informe seu WhatsApp e a forma de pagamento e toque em <b>Confirmar pedido</b>.</p>
 
         <form id="order-form" novalidate>
           <section class="plate card" aria-labelledby="h-items">
@@ -41,25 +41,33 @@
           <section class="plate card" aria-labelledby="h-delivery">
             <h2 class="stamp card__label" id="h-delivery">Entrega</h2>
             <div class="fields">
-              <label class="field">
-                <span>Nome</span>
-                <input name="nome" autocomplete="name" maxlength="80" required />
-              </label>
-              <label class="field">
-                <span>Telefone (WhatsApp)</span>
+              <label class="field field--wide" id="phone-field">
+                <span>Seu WhatsApp</span>
                 <input name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(51) 99999-9999" required />
               </label>
-              <label class="field field--wide">
+            </div>
+            <p class="lookup" id="lookup-status" role="status" hidden></p>
+
+            <div class="found" id="found-box" hidden>
+              <p class="found__hello" id="found-hello"></p>
+              <label class="choice">
+                <input type="radio" name="destino" value="cadastro" checked />
+                <span><b>Entregar no endereço do cadastro</b><span class="choice__sub" id="found-address"></span></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="destino" value="outro" />
+                <span><b>Entregar em outro endereço</b></span>
+              </label>
+            </div>
+
+            <div class="fields" id="address-box">
+              <label class="field field--wide" id="name-field" hidden>
+                <span>Seu nome</span>
+                <input name="nome" autocomplete="name" maxlength="80" />
+              </label>
+              <label class="field field--wide" id="address-field">
                 <span>Endereço de entrega</span>
-                <input name="endereco" autocomplete="street-address" maxlength="200" placeholder="Rua, número e bairro" required />
-              </label>
-              <label class="field field--wide">
-                <span>Complemento ou referência <em>(opcional)</em></span>
-                <input name="complemento" maxlength="120" placeholder="Apto, bloco, ponto de referência" />
-              </label>
-              <label class="field">
-                <span>CPF <em>(opcional)</em></span>
-                <input name="cpf" inputmode="numeric" maxlength="18" placeholder="000.000.000-00" />
+                <input name="endereco" autocomplete="street-address" maxlength="200" placeholder="Rua, número e bairro" />
               </label>
             </div>
           </section>
@@ -76,11 +84,28 @@
               <span>Troco para quanto? <em>(deixe vazio se não precisar)</em></span>
               <input name="troco" inputmode="decimal" maxlength="10" placeholder="Ex.: 200" />
             </label>
-            <label class="field field--wide">
-              <span>Observação <em>(opcional)</em></span>
-              <textarea name="obs" rows="2" maxlength="300" placeholder="Ex.: deixar na portaria"></textarea>
-            </label>
           </section>
+
+          <details class="plate card more" id="more">
+            <summary>
+              <span>Informações adicionais <em>(opcional)</em></span>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
+            </summary>
+            <div class="fields more__body">
+              <label class="field field--wide">
+                <span>Complemento ou ponto de referência</span>
+                <input name="complemento" maxlength="120" placeholder="Apto, bloco, casa dos fundos…" />
+              </label>
+              <label class="field field--wide">
+                <span>CPF na nota</span>
+                <input name="cpf" inputmode="numeric" maxlength="18" placeholder="000.000.000-00" />
+              </label>
+              <label class="field field--wide">
+                <span>Observação</span>
+                <textarea name="obs" rows="2" maxlength="300" placeholder="Ex.: deixar na portaria"></textarea>
+              </label>
+            </div>
+          </details>
 
           <div class="summary plate">
             <div class="summary__row">

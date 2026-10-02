@@ -2,11 +2,17 @@ rules_version = '2';
 // Conteúdo do site: qualquer um lê; só o(s) administrador(es) escrevem.
 // Administradores: usuários criados no Firebase Authentication.
 //
-// Pedidos pelo link do WhatsApp (página /pedido/...):
-//  - pedidos/{id}: o cliente só CRIA (status "novo", campos conferidos abaixo) e só LÊ o próprio
-//    pedido pelo id (aleatório, impossível de adivinhar). Ninguém lista, altera ou apaga.
-//    O Gateway Mania, no PC da loja, usa uma conta de serviço (acesso de administrador, fora destas regras).
-//  - catalogo/{número}: produtos e preços publicados pelo Gateway; leitura pública.
+// Pedidos pelo link do WhatsApp (página /pedido/...), separados por empresa (clientes/{cliente}),
+// no mesmo formato da futura plataforma online:
+//  - clientes/{cliente}: criado pelo Gateway. Só aceita pedidos para empresas cadastradas.
+//  - clientes/{cliente}/pedidos/{id}: o cliente só CRIA (status "novo", campos conferidos abaixo) e só LÊ
+//    o próprio pedido pelo id (aleatório, impossível de adivinhar). Ninguém lista, altera ou apaga.
+//    O Gateway Mania usa uma conta de serviço (acesso de administrador, fora destas regras): ao receber o
+//    pedido, apaga os dados pessoais (nome, telefone, CPF, endereço) e deixa só itens, status e código.
+//    O campo expiraEm + a política de TTL do Firestore apagam o resto sozinhos.
+//  - clientes/{cliente}/consultas/{id}: "já sou cliente?" — a página manda o telefone, o Gateway responde com
+//    nome e endereço do cadastro no ATEC e apaga o telefone; a resposta é removida em poucos minutos.
+//  - clientes/{cliente}/catalogo/{número}: produtos e preços publicados pelo Gateway; leitura pública.
 service cloud.firestore {
   match /databases/{database}/documents {
     function isAdmin() {
@@ -19,14 +25,19 @@ service cloud.firestore {
     }
 
     function validOrder(d) {
-      return d.keys().hasAll(['filial', 'status', 'nome', 'telefone', 'endereco', 'pagamento', 'itens'])
+      // nome e endereço são opcionais: cliente já cadastrado é achado pelo telefone ("usarCadastro")
+      return d.keys().hasAll(['filial', 'status', 'telefone', 'pagamento', 'itens'])
         && d.keys().hasOnly(['filial', 'status', 'origem', 'nome', 'telefone', 'cpf', 'endereco', 'complemento',
-                             'pagamento', 'troco', 'obs', 'itens', 'criadoEm'])
+                             'pagamento', 'troco', 'obs', 'itens', 'criadoEm', 'expiraEm', 'usarCadastro', 'consulta'])
         && d.status == 'novo'
         && d.filial is string && d.filial.matches('^[a-z0-9-]{1,60}$')
-        && d.nome is string && d.nome.size() > 0 && d.nome.size() <= 80
+        && optionalText(d, 'nome', 80)
         && d.telefone is string && d.telefone.size() >= 10 && d.telefone.size() <= 30
-        && d.endereco is string && d.endereco.size() > 0 && d.endereco.size() <= 200
+        && ((d.get('endereco', '') is string && d.get('endereco', '').size() > 0 && d.get('endereco', '').size() <= 200)
+            || d.get('usarCadastro', false) == true)
+        && optionalText(d, 'endereco', 200)
+        && (!('usarCadastro' in d) || d.usarCadastro is bool)
+        && (!('consulta' in d) || (d.consulta is string && d.consulta.matches('^[A-Za-z0-9]{10,40}$')))
         && d.pagamento in ['PIX', 'DINHEIRO', 'DEBITO', 'CREDITO']
         && d.itens is list && d.itens.size() > 0 && d.itens.size() <= 30
         && (!('troco' in d) || (d.troco is number && d.troco > 0 && d.troco <= 10000))
@@ -34,19 +45,34 @@ service cloud.firestore {
         && optionalText(d, 'complemento', 120)
         && optionalText(d, 'obs', 300)
         && optionalText(d, 'origem', 20)
-        && optionalText(d, 'criadoEm', 40);
+        && optionalText(d, 'criadoEm', 40)
+        && (!('expiraEm' in d) || (d.expiraEm is timestamp && d.expiraEm < request.time + duration.value(31, 'd')));
     }
 
     match /site/content {
       allow read: if true;
       allow write: if isAdmin();
     }
-    match /pedidos/{id} {
+    match /clientes/{cliente}/pedidos/{id} {
       allow get: if true;
-      allow create: if validOrder(request.resource.data);
+      allow create: if exists(/databases/$(database)/documents/clientes/$(cliente))
+        && validOrder(request.resource.data);
       allow list, update, delete: if false;
     }
-    match /catalogo/{numero} {
+    // Consulta de cadastro pelo telefone: a página cria e lê pelo id (aleatório); o Gateway responde
+    // (nome e endereço do ATEC), apaga o telefone e remove a resposta em minutos.
+    match /clientes/{cliente}/consultas/{id} {
+      allow get: if true;
+      allow create: if exists(/databases/$(database)/documents/clientes/$(cliente))
+        && request.resource.data.keys().hasOnly(['filial', 'telefone', 'status', 'criadoEm', 'expiraEm'])
+        && request.resource.data.status == 'nova'
+        && request.resource.data.filial is string && request.resource.data.filial.matches('^[a-z0-9-]{1,60}$')
+        && request.resource.data.telefone is string && request.resource.data.telefone.size() >= 10 && request.resource.data.telefone.size() <= 20
+        && (!('expiraEm' in request.resource.data) || (request.resource.data.expiraEm is timestamp
+             && request.resource.data.expiraEm < request.time + duration.value(1, 'd')));
+      allow list, update, delete: if false;
+    }
+    match /clientes/{cliente}/catalogo/{numero} {
       allow read: if true;
       allow write: if false;
     }
