@@ -155,6 +155,24 @@ function remember(id) {
     /* navegador sem armazenamento: segue sem lembrar */
   }
 }
+// O WhatsApp não passa o número do cliente para o link: depois do 1º pedido, este celular lembra
+// o telefone (e o nome) e preenche sozinho nos próximos. Fica só neste aparelho.
+const CLIENT_KEY = 'gm-cliente';
+function rememberClient(tel, nome) {
+  try {
+    localStorage.setItem(CLIENT_KEY, JSON.stringify({ tel, nome }));
+  } catch {
+    /* sem armazenamento */
+  }
+}
+function savedClient() {
+  try {
+    const v = JSON.parse(localStorage.getItem(CLIENT_KEY) || 'null');
+    return v && typeof v.tel === 'string' ? { tel: v.tel, nome: typeof v.nome === 'string' ? v.nome : '' } : null;
+  } catch {
+    return null;
+  }
+}
 function recall() {
   try {
     return localStorage.getItem(memoKey());
@@ -350,8 +368,14 @@ function updateTroco() {
 form.querySelectorAll('input[name="pagamento"]').forEach((r) => r.addEventListener('change', updateTroco));
 
 function fill(link) {
+  // o telefone vem no link (a IA põe o número do WhatsApp da conversa); sem ele, usa o que este celular lembrou
+  const fromLink = mobileWithNine(phoneDigits(link.tel));
+  const saved = fromLink.length >= 10 ? null : savedClient();
+  const tel = fromLink.length >= 10 ? fromLink : saved ? mobileWithNine(phoneDigits(saved.tel)) : '';
+  link = { ...link, tel, nome: link.nome || saved?.nome || '' };
   field('nome').value = link.nome;
   field('telefone').value = formatPhone(link.tel);
+  setPhoneLinked(link.tel.length === 10 || link.tel.length === 11);
   field('cpf').value = link.cpf;
   field('endereco').value = link.end;
   field('complemento').value = link.comp;
@@ -374,6 +398,25 @@ const phoneDigits = (text) => {
   if (d.length > 11 && d.startsWith('55')) d = d.slice(2);
   return d;
 };
+
+// Celular que veio sem o nono dígito (o WhatsApp informa assim números antigos: 51 8608-0783) → com o 9.
+// Só para o telefone do link/lembrado: no que o cliente digita, 10 dígitos podem ser um número pela metade.
+const mobileWithNine = (d) => (d.length === 10 && /[6-9]/.test(d[2]) ? `${d.slice(0, 2)}9${d.slice(2)}` : d);
+
+// Telefone já conhecido (link ou este celular): mostra "vinculado ao WhatsApp …" em vez do campo,
+// com "Trocar" para quem quiser usar outro número (ou se a IA errou o número).
+function setPhoneLinked(linked) {
+  $('phone-linked').hidden = !linked;
+  $('phone-field').hidden = linked;
+  if (linked) $('phone-linked-number').textContent = formatPhone(field('telefone').value);
+}
+$('phone-change').addEventListener('click', () => {
+  setPhoneLinked(false);
+  field('telefone').value = '';
+  state.lookup = { status: 'idle', phone: '', id: '', nome: '', endereco: null };
+  renderDelivery();
+  field('telefone').focus();
+});
 
 let lookupTimer = null;
 field('telefone').addEventListener('input', () => {
@@ -578,6 +621,7 @@ form.addEventListener('submit', async (event) => {
     return;
   }
   remember(id);
+  rememberClient(data.telefone, data.nome ?? '');
   showDone(id);
 });
 

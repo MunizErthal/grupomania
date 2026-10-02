@@ -25,7 +25,7 @@
       <!-- ── Revisão do pedido ─────────────────────────── -->
       <section id="view-review" hidden>
         <h1 class="title">Confira seu pedido<span class="hl">.</span></h1>
-        <p class="lead">Confira os itens, informe seu WhatsApp e a forma de pagamento e toque em <b>Confirmar pedido</b>.</p>
+        <p class="lead">Confira os itens, a entrega e a forma de pagamento e toque em <b>Confirmar pedido</b>.</p>
 
         <form id="order-form" novalidate>
           <section class="plate card" aria-labelledby="h-items">
@@ -41,6 +41,10 @@
           <section class="plate card" aria-labelledby="h-delivery">
             <h2 class="stamp card__label" id="h-delivery">Entrega</h2>
             <div class="fields">
+              <p class="linked field--wide" id="phone-linked" hidden>
+                Pedido vinculado ao WhatsApp <b id="phone-linked-number"></b>
+                <button type="button" class="linked__change" id="phone-change">Não é este número? Trocar</button>
+              </p>
               <label class="field field--wide" id="phone-field">
                 <span>Seu WhatsApp</span>
                 <input name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(51) 99999-9999" required />

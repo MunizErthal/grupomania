@@ -589,6 +589,30 @@ form {
 }
 
 /* ── Cadastro pelo telefone ─────────────── */
+.linked {
+  margin: 0;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.linked b {
+  color: var(--ink);
+  white-space: nowrap;
+}
+.linked__change {
+  display: block;
+  margin-top: 0.15rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
 .lookup {
   margin-top: 0.7rem;
   font-size: 0.95rem;
